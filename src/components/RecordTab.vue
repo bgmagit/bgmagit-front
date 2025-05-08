@@ -1,6 +1,6 @@
 <script setup>
 import { DataTable, Column, Button, MultiSelect } from 'primevue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 const columns = [
   { field: 'no', header: 'no', width: "5%" },
   { field: 'date', header: '일시', width: "auto"  },
@@ -38,6 +38,10 @@ const dt = ref();
 const exportCSV = () => {
   dt.value.exportCSV();
 };
+
+const orderedSelectedColumns = computed(() =>
+  columns.filter(c => selectedColumns.value.some(nc => nc.field === c.field))
+);
 </script>
 
 <template>
@@ -54,12 +58,13 @@ const exportCSV = () => {
              :paginator="true"
              :rowsPerPageOptions="[5, 10, 20, 50]">
     <Column
-      v-for="col in columns"
+      v-for="col in orderedSelectedColumns"
       :key="col.field"
       :field="col.field"
       :header="col.header"
       :style="`width: ${col.width}`"
       class="whitespace-nowrap"
+      :bodyStyle="{ textAlign: 'center' }"
     >
       <template v-if="col.field === 'button'" #body="{ data }">
         <Button

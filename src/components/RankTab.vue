@@ -1,7 +1,7 @@
 <script setup>
 import { DataTable, Column, Button, MultiSelect, IftaLabel, Dialog, InputText } from 'primevue'
 
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 const showModal = ref(false);
 const columns = [
   { field: 'rank', header: '순위', width: "5%" },
@@ -38,6 +38,10 @@ const openModal = (data) => {
   showModal.value = true;
   console.log(data)
 }
+
+const orderedSelectedColumns = computed(() =>
+  columns.filter(c => selectedColumns.value.some(nc => nc.field === c.field))
+);
 </script>
 
 <template>
@@ -55,7 +59,7 @@ const openModal = (data) => {
              :rowsPerPageOptions="[5, 10, 20, 50]"
             >
     <Column
-      v-for="col in selectedColumns"
+      v-for="col in orderedSelectedColumns"
       :key="col.field"
       :field="col.field"
       :header="col.header"
