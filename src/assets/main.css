@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    margin: 0;
+  }
+}
+
+.menubar-custom {
+  background-color: #F9DC5A !important;
+  border-radius: 4px !important;
+  font-size: 18px !important;
+  gap: 36px !important;
+}
+
+.active-tab {
+  background-color: #ffffff !important;
+  border: 1px solid #462768 !important;
+  border-radius: 4px !important;
+}
+
+.p-menubar-item:hover {
+  border: none !important;
+}
+
+.p-menubar-item-content {
+  color: #462768 !important;
+  font-weight: bolder;
+}
+
+.purple-button {
+  flex-shrink: 0;
+  background-color: #462768 !important;
+  border: none !important;
+}
+
+.login-input {
+  margin-bottom: 24px;
+}
+
+.purple-button:hover {
+  background-color: #5e3a8c !important;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .p-menubar {
+    position: relative;
+  }
+  .p-menubar-button {
+    position: absolute;
+    top: 50%;
+    margin-left: auto;
+  }
+}
+
+.tab-wrapper {
+  padding: 0 12px 0 12px;
+}
+
+.title-box{
+  margin: 24px 0 24px 0;
+  font-size: 28px;
+  font-weight: bolder;
+  text-align: center;
+  align-items: center;
+}
+.p-datatable-column-header-content {
+  justify-content: center;
+}
+
+.p-datatable thead th {
+  background-color: #462768;
+  color: white;
+  font-weight: bold;
+}
+
+.p-datatable th .p-column-header-content {
+  justify-content: center !important;
+}
+
+.p-datatable tbody tr:nth-child(even) {
+  background-color: #f3f4f6;
+}
+
+
+.table-button {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  margin-bottom: 16px;
+  justify-content: right;
+}
+
+.p-inputwrapper-filled {
+  border: 1px solid #462768 !important;
+}
+
+.p-inputwrapper-focus {
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.p-focus {
+  background: none;
+}
+
+.p-multiselect-dropdown-icon {
+  color: #462768;
+}
+
+.p-multiselect-chip {
+  background:  #F9DC5A !important;
+  color: #462768 !important;
+  font-weight: bolder !important;
+}
+
+.p-multiselect-chip:hover {
+  background:  #fff08a !important;
+  color: #462768 !important;
+  font-weight: bolder !important;
+}
+
+.p-chip-remove-icon {
+  color: #462768 !important;
+}
+
+.p-checkbox-box {
+  background: none !important;
+  border: 1px solid #462768 !important;
+}
+
+.p-checkbox-checked {
+  background-color: #462768 !important;
+  border-radius: 6px;
+}
+
+.p-paginator-page-selected {
+  background: #462768 !important;
+  color: white !important;
+}
+
+.p-select-option-selected {
+  background: #462768 !important;
+  color: white !important;
+}
+
+.iframe-box{
+  margin-top: 24px;
+}
