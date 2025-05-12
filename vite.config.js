@@ -12,6 +12,19 @@ export default defineConfig({
     vueJsx(),
     vueDevTools(),
   ],
+
+  server : {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    cors: true,
+    proxy: {
+      "/bgm-agit": {
+        changeOrigin: true,
+        secure: false,
+      },
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
