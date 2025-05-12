@@ -1,7 +1,5 @@
 <script setup>
-import { DataTable, Column, Button, MultiSelect, IftaLabel, Dialog, InputText } from 'primevue'
-
-import { computed, ref, watch } from 'vue'
+import { ref } from 'vue'
 const showModal = ref(false);
 const columns = [
   { field: 'rank', header: '순위', width: "5%" },
@@ -29,53 +27,23 @@ const rows = ref([
 
 const selectedColumns = ref([...columns])
 
-const dt = ref();
-const exportCSV = () => {
-  dt.value.exportCSV();
-};
-
 const openModal = (data) => {
   showModal.value = true;
   console.log(data)
 }
 
-const orderedSelectedColumns = computed(() =>
-  columns.filter(c => selectedColumns.value.some(nc => nc.field === c.field))
-);
 </script>
 
 <template>
   <div class="title-box">
     <i class="pi pi-star-fill" style="color: #F9DC5A; font-size: 24px"></i> 순위
   </div>
-  <div class="table-button">
-    <MultiSelect v-model="selectedColumns" :options="columns" optionLabel="header" placeholder="표시할 컬럼 선택" display="chip" class="min-w-[200px]"/>
-    <Button icon="pi pi-download" class="purple-button" @click="exportCSV($event)"/>
-  </div>
-  <DataTable :value="rows"
-             :rows="10"
-             ref="dt"
-             :paginator="true"
-             :rowsPerPageOptions="[5, 10, 20, 50]"
-            >
-    <Column
-      v-for="col in orderedSelectedColumns"
-      :key="col.field"
-      :field="col.field"
-      :header="col.header"
-      :style="`width: ${col.width}`"
-      class="whitespace-nowrap"
-      :bodyStyle="{ textAlign: 'center' }"
-    >
-      <template v-if="col.field === 'button'" #body="{ data }">
-        <Button
-          label="상세"
-          class="purple-button"
-          @click="openModal(data.rank)"
-        />
-      </template>
-    </Column>
-  </DataTable>
+  <TableArea
+    :columns="columns"
+    :rows="rows"
+    v-model:selectedColumns="selectedColumns"
+    @openModal="openModal"
+  />
   <Dialog v-model:visible="showModal" modal header="미정" style="width: 300px;">
     <div class="card flex flex-col justify-center items-center gap-2">
 <!--      <IftaLabel>-->
