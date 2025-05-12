@@ -1,6 +1,24 @@
 <script setup>
 import { ref } from 'vue'
 
+
+postJSON();
+async function postJSON() {
+  try {
+    const response = await fetch("http://localhost:8080/bgm-agit/record", {
+      method: "GET", // 또는 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+    });
+
+    const result = await response.json();
+    console.log("성공:", result);
+  } catch (error) {
+    console.error("실패:", error);
+  }
+}
 const columns = [
   { field: 'no', header: 'no', width: "5%" },
   { field: 'date', header: '일시', width: "auto"  },
@@ -10,6 +28,9 @@ const columns = [
   { field: 'rank3', header: '3위', width: "15%" },
   { field: 'rank4', header: '4위', width: "15%" }
 ]
+
+
+
 
 const rows = ref([
   {
