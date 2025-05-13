@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const pdfUrl = ref('/sample.pdf');
+const pdfUrl = ref('/rule.pdf');
 
 const fullPdfUrl = computed(() => {
   const base = window.location.origin; // 반드시 window 명시
