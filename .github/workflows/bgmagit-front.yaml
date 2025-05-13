@@ -9,13 +9,14 @@ jobs:
   E4is:
     runs-on: ubuntu-latest
     steps:
-      - name: SSH로 접속하기
+      - name: SSH로 접속해서 git pull후 build 그리고 nginx 다시 시작
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.PRIVATE_KEY }}
           port: '22'
+          script_stop: true
           script: |
            cd /usr/share/nginx/bgmagit-front
            sudo git pull
