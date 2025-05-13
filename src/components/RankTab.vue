@@ -1,5 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useLoadingStore } from '@/stores/useAppStore.js'
+const loadingStore = useLoadingStore();
 const showModal = ref(false);
 const columns = [
   { field: 'rank', header: '순위', width: "5%" },
@@ -7,7 +9,7 @@ const columns = [
   { field: 'score', header: '승점', width: "15%"  },
   { field: 'rate', header: '승점%', width: "15%" },
   { field: 'nation', header: '국수', width: "15%" },
-  { field: 'button', header: '버튼', width: "7%" }
+  { field: 'button', header: '보기', width: "7%" }
 ]
 
 const rows = ref([
@@ -29,18 +31,22 @@ const selectedColumns = ref([...columns])
 
 const openModal = (data) => {
   showModal.value = true;
-  console.log(data)
 }
+
+onMounted(() => {
+  loadingStore.setLoading(false); // 페이지 진입 시 로딩 시작
+});
 
 </script>
 
 <template>
   <div class="title-box">
-    <i class="pi pi-star-fill" style="color: #F9DC5A; font-size: 24px"></i> 순위
+    <img src="../assets/top3.png" alt="타이틀 이미지"/>
   </div>
   <TableArea
     :columns="columns"
     :rows="rows"
+    title="1"
     v-model:selectedColumns="selectedColumns"
     @openModal="openModal"
   />

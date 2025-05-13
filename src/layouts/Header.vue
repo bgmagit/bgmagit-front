@@ -11,28 +11,24 @@
     {
       label: '순위',
       command: () => activeTab(0),
-      class: tabStore.activeTab === 0 ? 'active-tab' : ''
+      class: tabStore.activeTab === 0 ? 'active-tab' : '',
+      icon: 'pi pi-star-fill'
     },
     {
       label: '기록',
       command: () => activeTab(1),
-      class: tabStore.activeTab === 1 ? 'active-tab' : ''
+      class: tabStore.activeTab === 1 ? 'active-tab' : '',
+      icon: 'pi pi-clock'
     },
     {
       label: '대회룰',
       command: () => activeTab(2),
-      class: tabStore.activeTab === 2 ? 'active-tab' : ''
+      class: tabStore.activeTab === 2 ? 'active-tab' : '',
+      icon: 'pi pi-book'
     },
-    {
-      label: 'Login',
-      command: () => {
-        showLogin.value = true
-      },
-    }
   ])
 
   function activeTab(value) {
-    console.log("value", value)
     tabStore.setTab(value);
   }
 </script>
@@ -45,6 +41,9 @@
     >
       <template #start>
         <img :src="mainLogo" alt="로고" class="w-[160px]" />
+      </template>
+      <template #end>
+        <Button label="Login" icon="pi pi-user-plus" class="purple-button" @click="showLogin = true" />
       </template>
     </Menubar>
   </header>

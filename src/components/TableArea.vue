@@ -5,7 +5,8 @@ import { Button, MultiSelect, DataTable, Column } from 'primevue'
 const props = defineProps({
   columns: Array,
   rows: Array,
-  selectedColumns: Array
+  selectedColumns: Array,
+  title: String,
 });
 
 const emit = defineEmits(['update:selectedColumns', 'openModal']);
@@ -53,20 +54,28 @@ const handleSelectedColumnsChange = (newSelected) => {
   );
   emit('update:selectedColumns', sortedSelected);
 };
+
+const rowClass = (data) => {
+  console.log("확인", data)
+  if (data.rank === 1) return 'bg-gold';
+  if (data.rank === 2) return 'bg-silver';
+  if (data.rank === 3) return 'bg-bronze';
+  return '';
+};
 </script>
 
 <template>
   <div class="table-button">
-    <MultiSelect
-      v-model="props.selectedColumns"
-      :options="props.columns"
-      optionLabel="header"
-      placeholder="표시할 컬럼 선택"
-      display="chip"
-      class="min-w-[200px]"
-      @update:modelValue="handleSelectedColumnsChange"
-    />
-    <Button icon="pi pi-download" class="purple-button" @click="exportCSV($event)" />
+      <MultiSelect
+        v-model="props.selectedColumns"
+        :options="props.columns"
+        optionLabel="header"
+        placeholder="표시할 컬럼 선택"
+        display="chip"
+        class="min-w-[200px]"
+        @update:modelValue="handleSelectedColumnsChange"
+      />
+      <Button icon="pi pi-download" class="purple-button" @click="exportCSV($event)" />
   </div>
 
   <DataTable
@@ -74,6 +83,7 @@ const handleSelectedColumnsChange = (newSelected) => {
     :rows="10"
     ref="dt"
     paginator
+    :rowClass="rowClass"
     :rowsPerPageOptions="[5, 10, 20, 50]"
   >
     <Column

@@ -19,7 +19,7 @@ const currentTabComponent = computed(() => tabComponents[tabStore.activeTab])
 
 <template>
   <main class="pt-[60px] flex-1 bg-[#fcebc2]">
-    <div class="tab-wrapper overflow-y-auto"> <!-- 여기에 패딩 적용 -->
+    <div class="tab-wrapper max-w-[1200px] mx-auto overflow-y-auto"> <!-- 여기에 패딩 적용 -->
       <component :is="currentTabComponent" :key="tabStore.activeTab" />
     </div>
   </main>

@@ -8,7 +8,15 @@ import 'primeicons/primeicons.css'
 
 import App from './App.vue'
 
-import { DataTable, Column, Button, MultiSelect, Dialog, InputText } from 'primevue'
+import {
+  DataTable,
+  Column,
+  Button,
+  MultiSelect,
+  Dialog,
+  InputText,
+  ProgressSpinner
+} from 'primevue'
 import TableArea from '@/components/TableArea.vue'
 
 const app = createApp(App)
@@ -27,5 +35,6 @@ app.component('MultiSelect', MultiSelect);
 app.component('Dialog', Dialog);
 app.component('InputText', InputText);
 app.component('TableArea', TableArea)
+app.component('Loading', ProgressSpinner);
 
 app.mount('#app');

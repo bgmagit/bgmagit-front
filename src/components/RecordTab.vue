@@ -1,24 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { useLoadingStore } from '@/stores/useAppStore.js'
 
+const loadingStore = useLoadingStore();
 
-postJSON();
-async function postJSON() {
-  try {
-    const response = await fetch("http://localhost:8080/bgm-agit/record", {
-      method: "GET", // 또는 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-    });
-
-    const result = await response.json();
-    console.log("성공:", result);
-  } catch (error) {
-    console.error("실패:", error);
-  }
-}
 const columns = [
   { field: 'no', header: 'no', width: "5%" },
   { field: 'date', header: '일시', width: "auto"  },
@@ -28,9 +13,6 @@ const columns = [
   { field: 'rank3', header: '3위', width: "15%" },
   { field: 'rank4', header: '4위', width: "15%" }
 ]
-
-
-
 
 const rows = ref([
   {
@@ -55,17 +37,21 @@ const rows = ref([
 
 const selectedColumns = ref([...columns])
 
+onMounted(() => {
+  loadingStore.setLoading(false); // 페이지 진입 시 로딩 시작
+});
 
 </script>
 
 <template>
   <div class="title-box">
-    <i class="pi pi-clock" style="color: #462768; font-size: 24px"></i> 기록
+    <img src="@/assets/top2.png" alt="타이틀 이미지"/>
   </div>
   <TableArea
     :columns="columns"
     :rows="rows"
     v-model:selectedColumns="selectedColumns"
+    title="2"
   />
 </template>
 

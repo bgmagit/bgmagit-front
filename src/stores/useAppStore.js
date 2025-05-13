@@ -11,3 +11,15 @@ export const useTabStore = defineStore('tab', {
     }
   }
 })
+
+export const useLoadingStore = defineStore('loading', {
+  state: () => ({
+    loading: false
+  }),
+  actions: {
+    setLoading(value) {
+      this.loading = value;
+    }
+  }
+})
+
