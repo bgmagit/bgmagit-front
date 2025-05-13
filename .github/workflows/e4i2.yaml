@@ -1,0 +1,23 @@
+name: e4i2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  E4is:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH로 접속하기
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          script_stop: true
+          script: |
+           cd /usr/share/nginx/bgmagit-front
+           sudo git pull
+           sudo npm i
+           sudo npm run build
+           sudo systemctl restart nginx
