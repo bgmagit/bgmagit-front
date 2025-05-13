@@ -15,7 +15,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script_stop: true
           script: |
            cd /usr/share/nginx/bgmagit-front
            sudo git pull
