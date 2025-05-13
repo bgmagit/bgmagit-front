@@ -48,13 +48,14 @@
     </Menubar>
   </header>
   <Dialog v-model:visible="showLogin" modal header="로그인" style="width: 300px;">
-    <div class="card flex flex-col justify-center items-center gap-2">
+    <template #header>
+      <h3 class="font-bold">로그인</h3>
+    </template>
       <IftaLabel>
         <InputText id="password" v-model="password" variant="filled" class="login-input" />
         <label for="password">password</label>
       </IftaLabel>
       <Button class="purple-button" label="Login" />
-    </div>
   </Dialog>
 </template>
 

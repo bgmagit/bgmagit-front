@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import api from '@/utils/axiosInstance.js';
 import { defineStore } from 'pinia'
 
 export const useTabStore = defineStore('tab', {
@@ -22,4 +22,39 @@ export const useLoadingStore = defineStore('loading', {
     }
   }
 })
+
+export const useRankStore = defineStore('rank', {
+  state: () => ({
+    data: null,
+    detailData: null,
+    error: null
+  }),
+
+  actions: {
+    async getRank() {
+      try {
+        useLoadingStore().setLoading(true)
+        const {data: rule} = await api.get('/bgm-agit/rank');
+
+        this.data = rule
+      } catch (error) {
+        console.error('error', error);
+      } finally {
+        useLoadingStore().setLoading(false);
+      }
+    },
+    async getDetailRank(name) {
+      try {
+        useLoadingStore().setLoading(true)
+        const {data: ruleDetail} = await api.get(`/bgm-agit/rank/${name}`);
+
+        this.detailData = ruleDetail
+      } catch (error) {
+        console.error('error', error);
+      } finally {
+        useLoadingStore().setLoading(false);
+      }
+    }
+  }
+});
 

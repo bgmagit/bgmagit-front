@@ -6,7 +6,7 @@ const props = defineProps({
   columns: Array,
   rows: Array,
   selectedColumns: Array,
-  title: String,
+  gb: String
 });
 
 const emit = defineEmits(['update:selectedColumns', 'openModal']);
@@ -56,16 +56,14 @@ const handleSelectedColumnsChange = (newSelected) => {
 };
 
 const rowClass = (data) => {
-  console.log("확인", data)
   if (data.rank === 1) return 'bg-gold';
   if (data.rank === 2) return 'bg-silver';
   if (data.rank === 3) return 'bg-bronze';
-  return '';
 };
 </script>
 
 <template>
-  <div class="table-button">
+  <div class="table-button" v-if="!props.gb">
       <MultiSelect
         v-model="props.selectedColumns"
         :options="props.columns"
@@ -99,7 +97,7 @@ const rowClass = (data) => {
         <Button
           label="상세"
           class="purple-button"
-          @click="() => emit('openModal', data.rank)"
+          @click="() => emit('openModal', data)"
         />
       </template>
     </Column>

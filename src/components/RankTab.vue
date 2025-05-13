@@ -1,65 +1,112 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useLoadingStore } from '@/stores/useAppStore.js'
-const loadingStore = useLoadingStore();
-const showModal = ref(false);
+import { computed, onMounted, ref } from 'vue'
+import { useRankStore } from '@/stores/useAppStore.js'
+const rankStore = useRankStore()
+const showModal = ref(false)
+
+const rankData = computed(() => {
+  const rankData = rankStore.data
+  if (rankData) {
+    console.log(rankData)
+    const rankDataWithRank = rankData.map((item, index) => ({
+      ...item,
+      rank: index + 1,
+      recordPercent: (item.recordSumPoint / item.round).toFixed(1) + '%',
+    }))
+
+    return rankDataWithRank
+  } else {
+    return null
+  }
+})
+
+const rankDetailData = ref()
+const modalHeader = ref()
+
 const columns = [
-  { field: 'rank', header: '순위', width: "5%" },
-  { field: 'name', header: '이름', width: "auto"  },
-  { field: 'score', header: '승점', width: "15%"  },
-  { field: 'rate', header: '승점%', width: "15%" },
-  { field: 'nation', header: '국수', width: "15%" },
-  { field: 'button', header: '보기', width: "7%" }
+  { field: 'rank', header: '순위', width: '5%' },
+  { field: 'recordName', header: '이름', width: 'auto' },
+  { field: 'recordSumPoint', header: '승점', width: '15%' },
+  { field: 'recordPercent', header: '승점%', width: '15%' },
+  { field: 'round', header: '국수', width: '15%' },
+  { field: 'button', header: '보기', width: '7%' },
 ]
 
-const rows = ref([
-  { rank: 1, name: '나그rrrrrrrrrrrrrrrrr', score: 202.8, rate: '41.03%', nation: 17 },
-  { rank: 2, name: '도미노킹', score: 198.2, rate: '39.50%', nation: 15 },
-  { rank: 3, name: '룰마스터', score: 210.7, rate: '45.12%', nation: 19 },
-  { rank: 4, name: '토끼와거북이', score: 192.3, rate: '38.41%', nation: 14 },
-  { rank: 5, name: '코리아보드', score: 185.9, rate: '36.10%', nation: 13 },
-  { rank: 6, name: '보드황제', score: 220.5, rate: '47.89%', nation: 21 },
-  { rank: 7, name: '미플조아', score: 176.4, rate: '34.05%', nation: 12 },
-  { rank: 8, name: '승부사민수', score: 199.9, rate: '40.00%', nation: 16 },
-  { rank: 9, name: '카탄도사', score: 188.8, rate: '37.45%', nation: 14 },
-  { rank: 10, name: '보드요정', score: 212.3, rate: '46.20%', nation: 18 },
-  { rank: 11, name: '주사위의신', score: 201.0, rate: '42.98%', nation: 17 },
-  { rank: 12, name: '게임박사', score: 193.7, rate: '39.88%', nation: 15 }
-])
+const modalColumns = [
+  { field: 'no', header: 'no', width: '5%' },
+  { field: 'registDate', header: '일시', width: 'auto' },
+  { field: 'wind', header: '국 길이', width: '15%' },
+  { field: 'first', header: '1위', width: '15%' },
+  { field: 'second', header: '2위', width: '15%' },
+  { field: 'third', header: '3위', width: '15%' },
+  { field: 'fourth', header: '4위', width: '15%' },
+]
 
 const selectedColumns = ref([...columns])
 
-const openModal = (data) => {
-  showModal.value = true;
+const openModal = async (data) => {
+
+  //모달 타이틀
+  modalHeader.value = data.recordName
+
+  await rankStore.getDetailRank(data.recordName)
+
+  const datas = rankStore.detailData
+
+  const recordIds = data.recordIds
+
+  const detailDatas = datas.map((item, index) => ({
+      ...item,
+      no: index + 1,
+      recodrdGb: recordIds.includes(item.recordId)
+    }))
+
+  rankDetailData.value = detailDatas
+  showModal.value = true
 }
 
-onMounted(() => {
-  loadingStore.setLoading(false); // 페이지 진입 시 로딩 시작
-});
+const rowModalClass = (data) => {
+  if (data.recodrdGb) return 'bg-purple';
+};
 
+onMounted(async () => {
+  await rankStore.getRank()
+})
 </script>
 
 <template>
   <div class="title-box">
-    <img src="../assets/top3.png" alt="타이틀 이미지"/>
+    <img src="../assets/top3.png" alt="타이틀 이미지" />
   </div>
   <TableArea
+    v-if="rankData"
     :columns="columns"
-    :rows="rows"
-    title="1"
+    :rows="rankData"
     v-model:selectedColumns="selectedColumns"
     @openModal="openModal"
   />
-  <Dialog v-model:visible="showModal" modal header="미정" style="width: 300px;">
-    <div class="card flex flex-col justify-center items-center gap-2">
-<!--      <IftaLabel>-->
-<!--        <InputText id="password" v-model="password" variant="filled" class="login-input" />-->
-<!--        <label for="password">password</label>-->
-<!--      </IftaLabel>-->
-    </div>
+  <Dialog v-model:visible="showModal" modal header="기록" style="width: 80%">
+    <template #header>
+      <h3 class="font-bold">{{modalHeader}}님의 상세 기록</h3>
+    </template>
+    <DataTable
+      :value="rankDetailData"
+      :rows="10"
+      paginator
+      :rowsPerPageOptions="[5, 10, 20, 50]"
+      :rowClass="rowModalClass">
+      <Column
+        v-for="col in modalColumns"
+        :key="col.field"
+        :field="col.field"
+        :header="col.header"
+        :style="`width: ${col.width}`"
+        class="whitespace-nowrap"
+        :bodyStyle="{ textAlign: 'center' }"
+      >
+      </Column>
+    </DataTable>
   </Dialog>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
