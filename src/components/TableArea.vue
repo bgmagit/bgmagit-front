@@ -13,7 +13,33 @@ const emit = defineEmits(['update:selectedColumns', 'openModal']);
 const dt = ref();
 
 const exportCSV = () => {
-  dt.value.exportCSV();
+  const data = dt.value.filteredValue || dt.value.value;
+  const csvContent = convertToCSV(data);
+
+  // BOM 추가 (한글 인코딩 깨짐 방지)
+  const BOM = '\uFEFF';
+  const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'BGM아지트.csv');
+  document.body.appendChild(link);
+
+  link.click();
+  document.body.removeChild(link);
+};
+
+const convertToCSV = (data) => {
+  if (!data || !data.length) return '';
+
+  const headers = Object.keys(data[0]).join(',');
+  const rows = data.map(row =>
+    Object.values(row).map(value => `"${value}"`).join(',')
+  );
+
+  return [headers, ...rows].join('\n');
 };
 
 const orderedSelectedColumns = computed(() =>

@@ -1,7 +1,13 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const pdfUrl = ref('/sample.pdf');
+
+const fullPdfUrl = computed(() => {
+  const base = window.location.origin; // 반드시 window 명시
+  const path = pdfUrl.value.startsWith('/') ? pdfUrl.value : '/' + pdfUrl.value;
+  return `${base}${path}`;
+});
 </script>
 
 <template>
@@ -10,7 +16,7 @@ const pdfUrl = ref('/sample.pdf');
   </div>
   <div class="iframe-box">
     <iframe
-      :src="pdfUrl"
+      :src="`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent('fullPdfUrl')}`"
       class="w-full h-[100vh] border-none"
     ></iframe>
   </div>
