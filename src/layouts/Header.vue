@@ -27,7 +27,7 @@
       label: 'Login',
       command: () => {
         showLogin.value = true
-      }
+      },
     }
   ])
 

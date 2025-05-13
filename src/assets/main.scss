@@ -9,16 +9,28 @@
 }
 
 .menubar-custom {
-  background-color: #F9DC5A !important;
+  background-image: url('@/assets/header.png') !important;
   border-radius: 4px !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   gap: 36px !important;
 }
 
+.p-menubar p-component p-menubar-mobile p-menubar-mobile-active flex-1 border-none menubar-custom{
+  .p-menubar-root-list{
+    background-color: white !important;
+  }
+}
+
 .active-tab {
-  background-color: #ffffff !important;
-  border: 1px solid #462768 !important;
-  border-radius: 4px !important;
+  background-color: #462768 !important;
+  border-radius: 8px !important;
+  .p-menubar-item-label{
+    color: white !important;
+  }
+}
+
+.p-menubar-item-label{
+  color: #462768 !important;
 }
 
 .p-menubar-item:hover {
@@ -26,9 +38,23 @@
 }
 
 .p-menubar-item-content {
+  background: none !important;
   color: #462768 !important;
   font-weight: bolder;
 }
+
+.p-menubar-item-content:hover {
+  background-color: #462768 !important;
+  .p-menubar-item-label {
+    color: white !important;
+  }
+}
+
+.p-menubar-item-content:active {
+  background: none;
+}
+
+
 
 .purple-button {
   flex-shrink: 0;
@@ -58,6 +84,7 @@
 
 .tab-wrapper {
   padding: 0 12px 0 12px;
+  margin-bottom: 12px;
 }
 
 .title-box{
@@ -71,9 +98,11 @@
   justify-content: center;
 }
 
+.p-datatable-table-container {
+  border-radius: 12px !important;
+}
+
 .p-datatable thead th {
-  background-color: #462768;
-  color: white;
   font-weight: bold;
 }
 
@@ -89,13 +118,13 @@
 .table-button {
   display: flex;
   flex-wrap: nowrap;
-  gap: 4px;
   margin-bottom: 16px;
   justify-content: right;
 }
 
 .p-inputwrapper-filled {
-  border: 1px solid #462768 !important;
+  border: none !important;
+  background: white !important;
 }
 
 .p-inputwrapper-focus {
