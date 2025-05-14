@@ -39,6 +39,5 @@ jobs:
           script_stop: true
           script: |
             sudo rm -rf /usr/share/nginx/bgmagit-front/dist
-            sudo mkdir -p /usr/share/nginx/bgmagit-front/dist
-            sudo mv /home/ubuntu/deploy/front-dist-temp/* /usr/share/nginx/bgmagit-front/dist/
+            sudo mv /home/ubuntu/deploy/front-dist-temp/* /usr/share/nginx/bgmagit-front/
             sudo systemctl restart nginx
