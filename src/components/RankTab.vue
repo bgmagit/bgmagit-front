@@ -75,8 +75,8 @@ onMounted(async () => {
   <div class="title-box">
     <img src="../assets/top3.png" alt="타이틀 이미지" />
   </div>
-  <transition name="rotate">
-    <div  v-if="!showModal">
+  <transition name="rotate" mode="out-in">
+    <div  v-if="!showModal" key="rank">
       <TableArea
         :columns="columns"
         :rows="rankData"
@@ -85,8 +85,8 @@ onMounted(async () => {
       />
     </div>
   </transition>
-  <transition name="rotate">
-    <div class="detail-box" v-if="showModal">
+  <transition name="rotate" mode="out-in">
+    <div class="detail-box" v-if="showModal" key="detail">
       <div class="detail-titleBox">
         <div>
           <i class ="pi pi-clock"></i>
@@ -108,11 +108,11 @@ onMounted(async () => {
 <style scoped>
 .rotate-enter-active,
 .rotate-leave-active {
-  transition: transform 0.8s ease, opacity 0.8s ease;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 .rotate-enter-from,
 .rotate-leave-to {
-  transform: rotateY(90deg);
+  transform: rotateY(180deg);
   opacity: 0;
 }
 .rotate-enter-to,
