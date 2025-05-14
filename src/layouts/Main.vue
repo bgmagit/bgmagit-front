@@ -19,12 +19,24 @@ const currentTabComponent = computed(() => tabComponents[tabStore.activeTab])
 
 <template>
   <main class="pt-[60px] flex-1 bg-[#fcebc2]">
-    <div class="tab-wrapper max-w-[1200px] mx-auto overflow-y-auto"> <!-- 여기에 패딩 적용 -->
-      <component :is="currentTabComponent" :key="tabStore.activeTab" />
+    <div class="tab-wrapper max-w-[1200px] mx-auto overflow-y-hidden">
+      <transition name="fade-slide" mode="out-in">
+        <component :is="currentTabComponent" :key="tabStore.activeTab" />
+      </transition>
     </div>
   </main>
 </template>
 
-<style>
-
+<style scoped>
+.fade-slide-enter-active, .fade-slide-leave-active {
+  transition: all 0.4s ease;
+}
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
 </style>

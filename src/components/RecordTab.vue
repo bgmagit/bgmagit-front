@@ -29,14 +29,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="title-box">
-    <img src="@/assets/top2.png" alt="타이틀 이미지"/>
+  <div>
+    <div class="title-box">
+      <img src="@/assets/top2.png" alt="타이틀 이미지"/>
+    </div>
+    <TableArea
+      :columns="columns"
+      :rows="recordData"
+      v-model:selectedColumns="selectedColumns"
+    />
   </div>
-  <TableArea
-    :columns="columns"
-    :rows="recordData"
-    v-model:selectedColumns="selectedColumns"
-  />
 </template>
 
 <style scoped>

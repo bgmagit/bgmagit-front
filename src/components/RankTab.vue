@@ -64,36 +64,38 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="title-box">
-    <img src="../assets/top3.png" alt="타이틀 이미지" />
-  </div>
-  <transition name="rotate" mode="out-in">
-    <div  v-if="!showModal" key="rank">
-      <TableArea
-        :columns="columns"
-        :rows="rankData"
-        v-model:selectedColumns="selectedColumns"
-        @openModal="openModal"
-      />
+  <div>
+    <div class="title-box">
+      <img src="../assets/top3.png" alt="타이틀 이미지" />
     </div>
-  </transition>
-  <transition name="rotate" mode="out-in">
-    <div class="detail-box" v-if="showModal" key="detail">
-      <div class="detail-titleBox">
-        <div>
-          <i class ="pi pi-clock"></i>
-          {{modalHeader}}님의 상세 기록
-        </div>
-        <Button class="purple-button" label="닫기" @click="() => showModal = false" />
+    <transition name="rotate" mode="out-in">
+      <div  v-if="!showModal" key="rank">
+        <TableArea
+          :columns="columns"
+          :rows="rankData"
+          v-model:selectedColumns="selectedColumns"
+          @openModal="openModal"
+        />
       </div>
-      <TableArea
-        :columns="modalColumns"
-        :rows="rankDetailData"
-        gb="detail"
-        v-model:selectedColumns="modalSelectColumns"
-      />
-    </div>
-  </transition>
+    </transition>
+    <transition name="rotate" mode="out-in">
+      <div class="detail-box" v-if="showModal" key="detail">
+        <div class="detail-titleBox">
+          <div>
+            <i class ="pi pi-clock"></i>
+            {{modalHeader}}님의 상세 기록
+          </div>
+          <Button class="purple-button" label="닫기" @click="() => showModal = false" />
+        </div>
+        <TableArea
+          :columns="modalColumns"
+          :rows="rankDetailData"
+          gb="detail"
+          v-model:selectedColumns="modalSelectColumns"
+        />
+      </div>
+    </transition>
+  </div>
 </template>
 
 

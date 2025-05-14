@@ -21,15 +21,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="title-box">
-    <img src="../assets/top.png" alt="타이틀 이미지"/>
-  </div>
-  <div class="iframe-box">
-    <iframe
-      :src="`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(fullPdfUrl)}`"
-      class="w-full h-[100vh] border-none"
-      @load="handleLoad"
-    ></iframe>
+  <div>
+    <div class="title-box">
+      <img src="../assets/top.png" alt="타이틀 이미지"/>
+    </div>
+    <div class="iframe-box">
+      <iframe
+        :src="`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(fullPdfUrl)}`"
+        class="w-full h-[100vh] border-none"
+        @load="handleLoad"
+      ></iframe>
+    </div>
   </div>
 </template>
 
