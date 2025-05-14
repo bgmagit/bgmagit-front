@@ -1,5 +1,60 @@
 import api from '@/utils/axiosInstance.js';
 import { defineStore } from 'pinia'
+import { ref, watch } from 'vue'
+
+export const useAuthStore = defineStore('auth', () => {
+  // 더미 사용자 목록
+  const users = [
+    { password: '3527', role: 'admin', name: '관리자' },
+    { password: '2629', role: 'user', name: '사용자' }
+  ]
+
+  const currentUser = ref(JSON.parse(localStorage.getItem('currentUser')));
+  const isLoggedIn = ref(!!currentUser.value);
+  const error = {}
+
+  const login = (password) => {
+    const found = users.find(user => user.password === password)
+    if (found) {
+      currentUser.value = found;
+      localStorage.setItem('currentUser', JSON.stringify(found));
+      error.code = 200;
+      error.message = '로그인 되었습니다.'
+      useToastStore().showToast(error)
+      isLoggedIn.value = true
+      return true
+    } else {
+      error.code = null;
+      error.message = '비밀번호가 틀렸습니다.';
+      useToastStore().showToast(error)
+      return false
+    }
+  }
+
+  const logout = () => {
+    currentUser.value = null
+    isLoggedIn.value = false
+    localStorage.removeItem('currentUser')
+    error.code = 200;
+    error.message = '로그아웃 되었습니다.'
+    useToastStore().showToast(error)
+  }
+
+  watch(currentUser, (newUser) => {
+    if (newUser) {
+      localStorage.setItem('currentUser', JSON.stringify(newUser))
+    }
+  })
+
+
+  return {
+    users,
+    currentUser,
+    isLoggedIn,
+    login,
+    logout,
+  }
+})
 
 export const useTabStore = defineStore('tab', {
   state: () => ({

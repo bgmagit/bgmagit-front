@@ -94,11 +94,10 @@
     position: relative;
   }
   .p-menubar-button {
-    position: absolute;
+    position: absolute !important;
     color: #5e3a8c !important;
-    top: 50%;
-    left: 70px;
-
+    top: 30% !important;
+    right: 28vw !important;
   }
 }
 

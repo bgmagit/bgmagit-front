@@ -1,11 +1,26 @@
 <script setup>
-  import { Menubar, InputText, IftaLabel, Dialog, Button } from 'primevue'
+  import { Menubar, IftaLabel, Password  } from 'primevue'
   import mainLogo from '@/assets/mainLogo.png'
   import { computed, ref } from 'vue'
-  import { useTabStore } from '@/stores/useAppStore.js'
+  import { useAuthStore, useTabStore } from '@/stores/useAppStore.js'
+
   const password = ref('');
   const showLogin = ref(false);
+
   const tabStore = useTabStore();
+  const authStore = useAuthStore();
+  const loggedIn = computed(() => authStore.isLoggedIn);
+
+  const handleLogin = () => {
+    const success = authStore.login(password.value)
+    if(success) showLogin.value = false;
+    password.value = '';
+  }
+
+  //로그아웃
+  const handleLogout = () => {
+    authStore.logout()
+  }
 
   const tabMenus = computed(() => [
     {
@@ -43,7 +58,8 @@
         <img :src="mainLogo" alt="로고" class="w-[160px]" />
       </template>
       <template #end>
-        <Button label="Login" icon="pi pi-user-plus" class="purple-button" @click="showLogin = true" />
+        <Button v-if="!loggedIn" label="Login" icon="pi pi-user-plus" class="purple-button" @click="showLogin = true" />
+        <Button v-if="loggedIn" label="Logout" icon="pi pi-user-minus" class="purple-button" @click="handleLogout()" />
       </template>
     </Menubar>
   </header>
@@ -52,11 +68,11 @@
       <h3 class="font-bold">로그인</h3>
     </template>
       <IftaLabel>
-        <InputText id="password" v-model="password" variant="filled" class="login-input" />
+        <Password id="password" v-model="password" toggleMask class="login-input" />
         <label for="password">password</label>
       </IftaLabel>
     <template #footer>
-      <Button class="purple-button" label="Login" />
+      <Button class="purple-button" label="Login" @click="handleLogin()"/>
     </template>
   </Dialog>
 </template>
