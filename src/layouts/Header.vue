@@ -55,7 +55,9 @@
         <InputText id="password" v-model="password" variant="filled" class="login-input" />
         <label for="password">password</label>
       </IftaLabel>
+    <template #footer>
       <Button class="purple-button" label="Login" />
+    </template>
   </Dialog>
 </template>
 

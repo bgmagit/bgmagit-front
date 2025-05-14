@@ -43,6 +43,7 @@ const modalColumns = [
 ]
 
 const selectedColumns = ref([...columns])
+const modalSelectColumns = ref([...modalColumns])
 
 const openModal = async (data) => {
 
@@ -65,10 +66,6 @@ const openModal = async (data) => {
   showModal.value = true
 }
 
-const rowModalClass = (data) => {
-  if (data.recodrdGb) return 'bg-purple';
-};
-
 onMounted(async () => {
   await rankStore.getRank()
 })
@@ -78,35 +75,49 @@ onMounted(async () => {
   <div class="title-box">
     <img src="../assets/top3.png" alt="타이틀 이미지" />
   </div>
-  <TableArea
-    v-if="rankData"
-    :columns="columns"
-    :rows="rankData"
-    v-model:selectedColumns="selectedColumns"
-    @openModal="openModal"
-  />
-  <Dialog v-model:visible="showModal" modal header="기록" style="width: 80%">
-    <template #header>
-      <h3 class="font-bold">{{modalHeader}}님의 상세 기록</h3>
-    </template>
-    <DataTable
-      :value="rankDetailData"
-      :rows="10"
-      paginator
-      :rowsPerPageOptions="[5, 10, 20, 50]"
-      :rowClass="rowModalClass">
-      <Column
-        v-for="col in modalColumns"
-        :key="col.field"
-        :field="col.field"
-        :header="col.header"
-        :style="`width: ${col.width}`"
-        class="whitespace-nowrap"
-        :bodyStyle="{ textAlign: 'center' }"
-      >
-      </Column>
-    </DataTable>
-  </Dialog>
+  <transition name="rotate">
+    <div  v-if="!showModal">
+      <TableArea
+        :columns="columns"
+        :rows="rankData"
+        v-model:selectedColumns="selectedColumns"
+        @openModal="openModal"
+      />
+    </div>
+  </transition>
+  <transition name="rotate">
+    <div class="detail-box" v-if="showModal">
+      <div class="detail-titleBox">
+        <div>
+          <i class ="pi pi-clock"></i>
+          {{modalHeader}}님의 상세 기록
+        </div>
+        <Button class="purple-button" label="닫기" @click="() => showModal = false" />
+      </div>
+      <TableArea
+        :columns="modalColumns"
+        :rows="rankDetailData"
+        gb="detail"
+        v-model:selectedColumns="modalSelectColumns"
+      />
+    </div>
+  </transition>
 </template>
 
-<style scoped></style>
+
+<style scoped>
+.rotate-enter-active,
+.rotate-leave-active {
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+.rotate-enter-from,
+.rotate-leave-to {
+  transform: rotateY(90deg);
+  opacity: 0;
+}
+.rotate-enter-to,
+.rotate-leave-from {
+  transform: rotateY(0);
+  opacity: 1;
+}
+</style>

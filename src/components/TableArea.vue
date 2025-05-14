@@ -56,14 +56,18 @@ const handleSelectedColumnsChange = (newSelected) => {
 };
 
 const rowClass = (data) => {
-  if (data.rank === 1) return 'bg-gold';
-  if (data.rank === 2) return 'bg-silver';
-  if (data.rank === 3) return 'bg-bronze';
+  if(props.gb === "detail"){
+    if (data.recodrdGb) return 'bg-purple';
+  }else{
+    if (data.rank === 1) return 'bg-gold';
+    if (data.rank === 2) return 'bg-silver';
+    if (data.rank === 3) return 'bg-bronze';
+  }
 };
 </script>
 
 <template>
-  <div class="table-button" v-if="!props.gb">
+  <div class="table-button">
       <MultiSelect
         v-model="props.selectedColumns"
         :options="props.columns"
