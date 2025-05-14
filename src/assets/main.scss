@@ -80,13 +80,25 @@
   border: none !important;
 }
 
-.login-input {
-  margin-bottom: 24px;
-}
-
 .purple-button:hover {
   background-color: #5e3a8c !important;
   cursor: pointer;
+}
+
+.red-button {
+  flex-shrink: 0;
+  background-color: red !important;
+  border: none !important;
+}
+
+.red-button:hover {
+  background-color: #e34e4e !important;
+  cursor: pointer;
+}
+
+
+.login-input {
+  margin-bottom: 24px;
 }
 
 @media (max-width: 768px) {
@@ -348,4 +360,79 @@
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 8px;
+
+  .total-box{
+    background-color: #482768;
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+
+.write-wrapper{
+  display: flex;
+  margin-top: 8px;
+  flex-direction: column;
+  padding: 16px;
+  background-color: white;
+  border-radius: 12px;
+
+  .write-box{
+    display: flex;
+    .p-inputgroup{
+      width: 33%;
+      margin: auto;
+    }
+    margin: 12px 0 12px 0;
+  }
+  .write-box2{
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .p-select {
+    border: 1px solid #cad4e0 !important;
+    border-radius: 6px;
+  }
+
+  .select:focus {
+    border: 1.4px solid black !important;
+  }
+}
+
+.record-check {
+  color: green !important;
+  margin-right: 8px;
+}
+
+.record-check-none {
+  color: transparent !important;
+  margin-right: 8px;
+}
+
+.confirm-box{
+  display: flex;
+  flex-direction: column;
+
+  .confirmHeader-box{
+    background-color: #482768;
+    border-radius: 10px 10px 0 0;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .confirmContent-box{
+    padding: 8px;
+  }
+
+  .confirmButton-box{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+  }
 }

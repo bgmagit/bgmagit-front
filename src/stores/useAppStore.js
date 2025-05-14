@@ -156,3 +156,93 @@ export const useRecordStore = defineStore('record', {
   }
 });
 
+export const useWriteState = defineStore('write', {
+  state: () => ({
+    items: [],
+  }),
+
+  actions: {
+    async fetchMemos() {
+      // const baseInfo = useBaseInfoStore().baseInfo;
+      // const receiptNo = baseInfo.receiptNo;
+      //
+      // try {
+      //   const {data: result} = await api.get(`/viewer-api/viewer-file-memo/${receiptNo}`, {
+      //     params: {
+      //       userId: baseInfo.info.id
+      //     }
+      //   });
+      //   this.items = result;
+      // } catch (error) {
+      //   await useGlobalToastStore().showToast(error)
+      // }
+    },
+
+    // 메모 입력
+    async addContent(newItem, total) {
+      try {
+
+        const error = {}
+        console.log("newItem", newItem)
+        debugger
+        if(total === 120000) {
+          const {data: result} = await api.post(`/bgm-agit/record`, newItem, );
+
+          await useToastStore().showToast(result);
+        }else {
+          error.message = '접수 합계는 120000이어야 합니다.'
+          await useToastStore().showToast(error)
+        }
+
+      } catch (error) {
+        console.error('error', error);
+        error.message = "저장에 실패하였습니다.";
+        await useToastStore().showToast(error);
+      }
+    },
+
+    // // 메모 수정
+    // async updateMemo(updateItem, gb) {
+    //   try {
+    //     const {data: result} = await api.put(`/viewer-api/viewer-${gb}-memo`, updateItem, );
+    //
+    //     if (gb === 'file') {
+    //       await this.fetchMemos();
+    //     } else {
+    //       await this.fetchAllMemos();
+    //     }
+    //
+    //     await useGlobalToastStore().showToast(result);
+    //   } catch (error) {
+    //     error.message = "메모 수정이 실패했습니다.";
+    //     await useGlobalToastStore().showToast(error);
+    //   }
+    // },
+    //
+    // // 메모 삭제
+    // async deleteMemo(seq, gb) {
+    //   try {
+    //     const {data: result} = await api.delete(`/viewer-api/viewer-${gb}-memo/${seq}`);
+    //
+    //     if (gb === 'file') {
+    //       await this.fetchMemos();
+    //     } else {
+    //       await this.fetchAllMemos();
+    //     }
+    //
+    //     await useGlobalToastStore().showToast(result);
+    //   } catch (error) {
+    //     error.message = "메모 삭제가 실패했습니다.";
+    //     await useGlobalToastStore().showToast(error);
+    //   }
+    // },
+    //
+    // setSelectMemoData(newData) {
+    //   this.selectedItem = newData;
+    // },
+    //
+    // setMemoGb(boolean) {
+    //   this.memoGb = boolean;
+    // },
+  },
+});

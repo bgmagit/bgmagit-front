@@ -75,13 +75,9 @@ const handleSelectedColumnsChange = (newSelected) => {
 };
 
 const rowClass = (data) => {
-  if(props.gb === "detail"){
-    if (data.recodrdGb) return 'bg-purple';
-  }else{
-    if (data.rank === 1) return 'bg-gold';
-    if (data.rank === 2) return 'bg-silver';
-    if (data.rank === 3) return 'bg-bronze';
-  }
+  if (data.rank === 1) return 'bg-gold';
+  if (data.rank === 2) return 'bg-silver';
+  if (data.rank === 3) return 'bg-bronze';
 };
 </script>
 
@@ -116,6 +112,11 @@ const rowClass = (data) => {
       class="whitespace-nowrap"
       :bodyStyle="{ textAlign: 'center' }"
     >
+      <template v-if="col.field === 'registDate'" #body="{ data }">
+        <i v-if="data.recodrdGb" class="pi pi-check record-check"></i>
+        <i v-if="!data.recodrdGb" class="pi pi-check record-check-none"></i>
+        {{data.registDate}}
+      </template>
       <template v-if="col.field === 'button'" #body="{ data }">
         <Button
           label="상세"

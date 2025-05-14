@@ -22,26 +22,40 @@
     authStore.logout()
   }
 
-  const tabMenus = computed(() => [
-    {
-      label: '순위',
-      command: () => activeTab(0),
-      class: tabStore.activeTab === 0 ? 'active-tab' : '',
-      icon: 'pi pi-star-fill'
-    },
-    {
-      label: '기록',
-      command: () => activeTab(1),
-      class: tabStore.activeTab === 1 ? 'active-tab' : '',
-      icon: 'pi pi-clock'
-    },
-    {
-      label: '대회룰',
-      command: () => activeTab(2),
-      class: tabStore.activeTab === 2 ? 'active-tab' : '',
-      icon: 'pi pi-book'
-    },
-  ])
+  const tabMenus = computed(() => {
+    const baseTabs = [
+      {
+        label: '순위',
+        command: () => activeTab(0),
+        class: tabStore.activeTab === 0 ? 'active-tab' : '',
+        icon: 'pi pi-star-fill'
+      },
+      {
+        label: '기록',
+        command: () => activeTab(1),
+        class: tabStore.activeTab === 1 ? 'active-tab' : '',
+        icon: 'pi pi-clock'
+      },
+      {
+        label: '대회룰',
+        command: () => activeTab(2),
+        class: tabStore.activeTab === 2 ? 'active-tab' : '',
+        icon: 'pi pi-book'
+      }
+    ]
+
+    // 로그인된 경우에만 '입력' 탭 추가
+    if (authStore.isLoggedIn) {
+      baseTabs.push({
+        label: '입력',
+        command: () => activeTab(3),
+        class: tabStore.activeTab === 3 ? 'active-tab' : '',
+        icon: 'pi pi-pencil'
+      })
+    }
+
+    return baseTabs
+  })
 
   function activeTab(value) {
     tabStore.setTab(value);

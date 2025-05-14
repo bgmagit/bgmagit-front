@@ -4,6 +4,7 @@ import Main from '@/layouts/Main.vue'
 import { useLoadingStore, useToastStore } from '@/stores/useAppStore.js'
 import { computed, watch } from 'vue'
 import { useToast } from 'primevue/usetoast'
+import BaseConfirmDialog from '@/Modal/BaseConfirmDialog.vue'
 
 const loadingStore = useLoadingStore();
 const toastStore = useToastStore();
@@ -32,6 +33,7 @@ watch(() => toastStore.toastMessage, (val) => {
 
 <template>
   <div class="flex flex-col h-screen min-w-[320px]">
+    <BaseConfirmDialog/>
     <Alert/>
     <Header/>
     <Main/>

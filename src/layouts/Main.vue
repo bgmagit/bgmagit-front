@@ -5,12 +5,14 @@ import { useTabStore } from '@/stores/useAppStore.js'
 import RankTab from '@/components/RankTab.vue'
 import RecordTab from '@/components/RecordTab.vue'
 import RulesTab from '@/components/RulesTab.vue'
+import WriteTab from '@/components/WriteTab.vue'
 
 const tabStore = useTabStore()
 const tabComponents = {
   0: RankTab,
   1: RecordTab,
-  2: RulesTab
+  2: RulesTab,
+  3: WriteTab
 }
 
 const currentTabComponent = computed(() => tabComponents[tabStore.activeTab])

@@ -15,7 +15,7 @@ import {
   MultiSelect,
   Dialog,
   InputText,
-  ProgressSpinner, ToastService, Toast
+  ProgressSpinner, ToastService, Toast, ConfirmationService
 } from 'primevue'
 import TableArea from '@/components/TableArea.vue'
 
@@ -26,7 +26,7 @@ app.use(createPinia())
     theme: {
       preset: Aura
     }
-  }).use(ToastService);
+  }).use(ToastService).use(ConfirmationService);
 
 app.component('DataTable', DataTable);
 app.component('Column', Column);
