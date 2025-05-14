@@ -1,44 +1,29 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useLoadingStore } from '@/stores/useAppStore.js'
+import { computed, onMounted, ref } from 'vue'
+import { useRecordStore } from '@/stores/useAppStore.js'
 
-const loadingStore = useLoadingStore();
+const recordStore = useRecordStore();
 
+const recordData = computed(() => {
+  return (recordStore.data || []).map((item, index) => ({
+    ...item,
+    no: index + 1,
+  }))
+})
 const columns = [
   { field: 'no', header: 'no', width: "5%" },
-  { field: 'date', header: '일시', width: "auto"  },
-  { field: 'gameStage', header: '국 길이', width: "15%"  },
-  { field: 'rank', header: '1위', width: "15%" },
-  { field: 'rank2', header: '2위', width: "15%" },
-  { field: 'rank3', header: '3위', width: "15%" },
-  { field: 'rank4', header: '4위', width: "15%" }
+  { field: 'registDate', header: '일시', width: "auto"  },
+  { field: 'wind', header: '국 길이', width: "15%"  },
+  { field: 'first', header: '1위', width: "15%" },
+  { field: 'second', header: '2위', width: "15%" },
+  { field: 'third', header: '3위', width: "15%" },
+  { field: 'fourth', header: '4위', width: "15%" }
 ]
-
-const rows = ref([
-  {
-    no: 1,
-    date: '2025-05-06 23:46:30',
-    gameStage: '남장',
-    rank: '[북]배성환: 36500',
-    rank2: '[서]김승주: 30400',
-    rank3: '[남]이지금: 26900',
-    rank4: '[동]진하: 26200',
-  },
-  {
-    no: 2,
-    date: '2025-05-08 23:46:30',
-    gameStage: '남장',
-    rank: '[북]태진아: 36500',
-    rank2: '[서]차인표: 30400',
-    rank3: '[남]현빈: 26900',
-    rank4: '[동]원빈: 126200',
-  }
-])
 
 const selectedColumns = ref([...columns])
 
-onMounted(() => {
-  loadingStore.setLoading(false); // 페이지 진입 시 로딩 시작
+onMounted(async () => {
+  await recordStore.getRecord();
 });
 
 </script>
@@ -49,9 +34,8 @@ onMounted(() => {
   </div>
   <TableArea
     :columns="columns"
-    :rows="rows"
+    :rows="recordData"
     v-model:selectedColumns="selectedColumns"
-    title="2"
   />
 </template>
 

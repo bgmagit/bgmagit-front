@@ -5,19 +5,11 @@ const rankStore = useRankStore()
 const showModal = ref(false)
 
 const rankData = computed(() => {
-  const rankData = rankStore.data
-  if (rankData) {
-    console.log(rankData)
-    const rankDataWithRank = rankData.map((item, index) => ({
-      ...item,
-      rank: index + 1,
-      recordPercent: (item.recordSumPoint / item.round).toFixed(1) + '%',
-    }))
-
-    return rankDataWithRank
-  } else {
-    return null
-  }
+  return (rankStore.data || []).map((item, index) => ({
+    ...item,
+    rank: index + 1,
+    recordPercent: (item.recordSumPoint / item.round).toFixed(1) + '%',
+  }))
 })
 
 const rankDetailData = ref()
@@ -67,7 +59,7 @@ const openModal = async (data) => {
 }
 
 onMounted(async () => {
-  await rankStore.getRank()
+  await rankStore.getRank();
 })
 </script>
 

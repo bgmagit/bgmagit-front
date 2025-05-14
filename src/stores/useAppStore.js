@@ -77,3 +77,26 @@ export const useRankStore = defineStore('rank', {
   }
 });
 
+export const useRecordStore = defineStore('record', {
+  state: () => ({
+    data: null,
+    detailData: null,
+    error: null
+  }),
+
+  actions: {
+    async getRecord() {
+      try {
+        useLoadingStore().setLoading(true)
+        const {data: record} = await api.get('/bgm-agit/record');
+        this.data = record
+      } catch (error) {
+        error.message = '기록 조회 에러가 발생하였습니다.'
+        await useToastStore().showToast(error)
+        console.error('error', error);
+      } finally {
+        useLoadingStore().setLoading(false);
+      }
+    },
+  }
+});
