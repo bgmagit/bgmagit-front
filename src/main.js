@@ -15,7 +15,7 @@ import {
   MultiSelect,
   Dialog,
   InputText,
-  ProgressSpinner
+  ProgressSpinner, ToastService, Toast
 } from 'primevue'
 import TableArea from '@/components/TableArea.vue'
 
@@ -26,7 +26,7 @@ app.use(createPinia())
     theme: {
       preset: Aura
     }
-  });
+  }).use(ToastService);
 
 app.component('DataTable', DataTable);
 app.component('Column', Column);
@@ -36,5 +36,6 @@ app.component('Dialog', Dialog);
 app.component('InputText', InputText);
 app.component('TableArea', TableArea)
 app.component('Loading', ProgressSpinner);
+app.component('Alert', Toast)
 
 app.mount('#app');

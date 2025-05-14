@@ -23,6 +23,21 @@ export const useLoadingStore = defineStore('loading', {
   }
 })
 
+//전역 알림 메시지
+export const useToastStore = defineStore('toast', {
+  state: () => ({
+    toastMessage: null,
+  }),
+  actions: {
+    showToast(result) {
+      this.toastMessage = result;
+    },
+    clearToast() {
+      this.toastMessage = null;
+    }
+  }
+});
+
 export const useRankStore = defineStore('rank', {
   state: () => ({
     data: null,
@@ -38,6 +53,8 @@ export const useRankStore = defineStore('rank', {
 
         this.data = rule
       } catch (error) {
+        error.message = '순위 조회 에러가 발생하였습니다.'
+        await useToastStore().showToast(error)
         console.error('error', error);
       } finally {
         useLoadingStore().setLoading(false);
@@ -50,6 +67,8 @@ export const useRankStore = defineStore('rank', {
 
         this.detailData = ruleDetail
       } catch (error) {
+        error.message = '상세 조회 에러가 발생하였습니다.'
+        await useToastStore().showToast(error)
         console.error('error', error);
       } finally {
         useLoadingStore().setLoading(false);
