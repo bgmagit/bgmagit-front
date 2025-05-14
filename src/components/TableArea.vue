@@ -16,18 +16,37 @@ const dt = ref();
 const exportCSV = () => {
   const data = dt.value.filteredValue || dt.value.value;
   const csvContent = convertToCSV(data);
-
-  // BOM 추가 (한글 인코딩 깨짐 방지)
   const BOM = '\uFEFF';
-  const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const fullContent = BOM + csvContent;
 
-  const link = document.createElement('a');
+  const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
+    (navigator.userAgent.includes('Macintosh') && 'ontouchend' in document);
+
+  // iOS 공유 API 사용
+  if (isIOS && navigator.canShare && navigator.canShare({ files: [new File([], '')] })) {
+    const file = new File([fullContent], 'BGM아지트.csv', {
+      type: 'text/csv;charset=utf-8;',
+    });
+
+    navigator.share({
+      files: [file],
+      title: 'BGM 아지트',
+      text: '데이터를 공유합니다.',
+    }).catch((err) => {
+      console.error('공유 실패:', err);
+    });
+
+    return;
+  }
+
+  // 일반 다운로드 (데스크탑, 안드로이드 등)
+  const blob = new Blob([fullContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
 
   link.setAttribute('href', url);
   link.setAttribute('download', 'BGM아지트.csv');
   document.body.appendChild(link);
-
   link.click();
   document.body.removeChild(link);
 };
