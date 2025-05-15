@@ -74,8 +74,8 @@
         <img :src="mainLogo" alt="로고" class="w-[160px]" />
       </template>
       <template #end>
-        <Button v-if="!loggedIn" label="Login" icon="pi pi-user-plus" class="purple-button" @click="showLogin = true" />
-        <Button v-if="loggedIn" label="Logout" icon="pi pi-user-minus" class="purple-button" @click="handleLogout()" />
+        <Button v-if="!loggedIn" label="Login" icon="pi pi-user-plus" class="green-button" @click="showLogin = true" />
+        <Button v-if="loggedIn" label="Logout" icon="pi pi-user-minus" class="red-button" @click="handleLogout()" />
       </template>
     </Menubar>
   </header>
@@ -88,7 +88,7 @@
         <label for="password">password</label>
       </IftaLabel>
     <template #footer>
-      <Button class="purple-button" label="Login" @click="handleLogin()"/>
+      <Button class="blue-button" label="Login" @click="handleLogin()"/>
     </template>
   </Dialog>
 </template>

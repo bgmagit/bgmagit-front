@@ -128,7 +128,7 @@ const deleteData = async (data) => {
         class="min-w-[200px]"
         @update:modelValue="handleSelectedColumnsChange"
       />
-      <Button icon="pi pi-download" class="purple-button" @click="exportCSV($event)" />
+      <Button icon="pi pi-download" class="blue-button" @click="exportCSV($event)" />
   </div>
 
   <DataTable
@@ -157,7 +157,7 @@ const deleteData = async (data) => {
         <div class="dataTable-buttonBox">
           <Button
             label="상세"
-            class="purple-button"
+            class="blue-button"
             @click="() => emit('openModal', data)"
             v-if="data.rank"
           />

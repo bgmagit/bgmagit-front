@@ -93,6 +93,17 @@
     cursor: pointer;
   }
 }
+
+.green-button {
+  flex-shrink: 0;
+  background-color: #16a34a !important;
+  border: none !important;
+  &:hover{
+    background-color: #22c55e !important;
+    cursor: pointer;
+  }
+}
+
 .blue-button {
   flex-shrink: 0;
   background-color: #1d4ed8 !important;
@@ -202,7 +213,7 @@
 }
 
 .p-multiselect-chip {
-  background: #462768 !important;
+  background: #16a34a !important;
   color: white !important;
   font-weight: bolder !important;
   svg{
@@ -214,7 +225,7 @@
 }
 
 .p-multiselect-chip:hover {
-  background:  #5e3a8c !important;
+  background:  #22c55e !important;
   color: white !important;
   font-weight: bolder !important;
 }
@@ -225,11 +236,11 @@
 
 .p-checkbox-box {
   background: none !important;
-  border: 1px solid #462768 !important;
+  border: 1px solid #16a34a !important;
 }
 
 .p-checkbox-checked {
-  background-color: #462768 !important;
+  background-color: #16a34a !important;
   border-radius: 6px;
 }
 
