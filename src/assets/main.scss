@@ -289,6 +289,13 @@
   color: black !important;
 }
 
+.p-dialog-header-icon {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  -webkit-appearance: none;
+}
+
 .p-dialog-mask .p-dialog {
   border: none;
 
