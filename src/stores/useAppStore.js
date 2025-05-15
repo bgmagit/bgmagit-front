@@ -5,7 +5,7 @@ import { ref, watch } from 'vue'
 export const useAuthStore = defineStore('auth', () => {
   // 더미 사용자 목록
   const users = [
-    { password: '3527', role: 'admin', name: '관리자' },
+    { password: '3567', role: 'admin', name: '관리자' },
     { password: '2629', role: 'user', name: '사용자' }
   ]
 
