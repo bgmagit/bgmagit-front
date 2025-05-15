@@ -298,14 +298,19 @@
 
   &-header {
     padding: 0 0 0 1.5rem;
-    background-color: #462768;
+    background-color: #16a24a;
     border-radius: 10px 10px 0 0 !important;
     h3 {
       font-size: 1rem;
       color: #fff;
     }
     .p-button-text.p-button-secondary {
-      color: #ccc;
+      border: none !important;
+      color: #fff;
+    }
+    .p-button-text{
+      border: none !important;
+      color: white !important;
     }
     .p-button-text.p-button-secondary:not(:disabled):hover {
       background-color: transparent;
@@ -313,6 +318,7 @@
         color: #fff;
       }
     }
+
   }
   &-content {
     padding-top: 1.25rem;
@@ -331,29 +337,6 @@
       border-color: #256ef4;
       background-color: #256ef4;
       font-size: 0.875rem;
-      &.p-button-outlined {
-        border: 1px solid #64748b;
-        background-color: #fff;
-        color: #3e4f67;
-        &:hover {
-          border: 1px solid #64748b;
-          background-color: #e2e4e9;
-          color: #3e4f67;
-        }
-        &:active {
-          border: 1px solid #64748b;
-          background-color: #d3d7de;
-          color: #3e4f67;
-        }
-      }
-      &:hover {
-        border-color: #0063e7;
-        background-color: #0063e7;
-      }
-      &:active {
-        border-color: #0058da;
-        background-color: #0058da;
-      }
       .p-button-label {
         font-weight: normal;
       }
