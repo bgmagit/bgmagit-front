@@ -1,8 +1,10 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useRecordStore } from '@/stores/useAppStore.js'
+import { useAuthStore, useRecordStore } from '@/stores/useAppStore.js'
 
 const recordStore = useRecordStore();
+const authStore = useAuthStore();
+const currentUser = computed(() => authStore.currentUser);
 
 const recordData = computed(() => {
   return (recordStore.data || []).map((item, index) => ({
@@ -18,8 +20,11 @@ const columns = [
   { field: 'second', header: '2위', width: "15%" },
   { field: 'third', header: '3위', width: "15%" },
   { field: 'fourth', header: '4위', width: "15%" },
-  { field: 'button', header: '버튼', width: '7%' },
 ]
+
+if (currentUser.value?.role === 'admin') {
+  columns.push({ field: 'button', header: '버튼', width: '7%' });
+}
 
 const selectedColumns = ref([...columns])
 
