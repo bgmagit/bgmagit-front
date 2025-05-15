@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { Button, MultiSelect, DataTable, Column } from 'primevue'
-import { useAuthStore, useTabStore } from '@/stores/useAppStore.js'
+import { useAuthStore, useTabStore, useWriteState } from '@/stores/useAppStore.js'
 
 const props = defineProps({
   columns: Array,
@@ -12,6 +12,7 @@ const props = defineProps({
 
 const authStore = useAuthStore();
 const tabStore = useTabStore();
+const writeStore = useWriteState();
 const currentUser = computed(() => authStore.currentUser);
 
 const emit = defineEmits(['update:selectedColumns', 'openModal']);
@@ -90,9 +91,11 @@ const rowClass = (data) => {
   if (data.rank === 3) return 'bg-bronze';
 };
 
-const moveTab = (data) => {
-
-  tabStore.setTab(3);
+const moveTab = async (data) => {
+  const detailData = await writeStore.getContent(data.matchsId);
+  if(detailData) {
+    tabStore.setTab(3, true);
+  }
 }
 
 </script>

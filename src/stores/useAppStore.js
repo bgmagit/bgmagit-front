@@ -59,11 +59,16 @@ export const useAuthStore = defineStore('auth', () => {
 
 export const useTabStore = defineStore('tab', {
   state: () => ({
-    activeTab: 0// 기본 탭
+    activeTab: 0,// 기본 탭
+    writeTab: false,
   }),
   actions: {
-    setTab(value) {
+    setTab(value, write) {
+      if(!write){
+        this.writeTab = false;
+      }
       this.activeTab = value;
+      this.writeTab = write;
     }
   }
 })
@@ -163,35 +168,23 @@ export const useWriteState = defineStore('write', {
   }),
 
   actions: {
-    async fetchMemos() {
-      // const baseInfo = useBaseInfoStore().baseInfo;
-      // const receiptNo = baseInfo.receiptNo;
-      //
-      // try {
-      //   const {data: result} = await api.get(`/viewer-api/viewer-file-memo/${receiptNo}`, {
-      //     params: {
-      //       userId: baseInfo.info.id
-      //     }
-      //   });
-      //   this.items = result;
-      // } catch (error) {
-      //   await useGlobalToastStore().showToast(error)
-      // }
+    async getContent(id) {
+      try {
+        const {data: result} = await api.get(`/bgm-agit/record/${id}`);
+        this.items = result;
+      } catch (error) {
+        error.message = '상세 조회에 실패하였습니다.'
+        await useToastStore().showToast(error)
+      }
     },
 
     // 메모 입력
-    async addContent(newItem, total) {
+    async addContent(newItem) {
       try {
 
-        if(total === 120000) {
           const {data: result} = await api.post(`/bgm-agit/record`, newItem, );
 
           await useToastStore().showToast(result);
-        }else {
-          const error = {}
-          error.message = '접수 합계는 120000점이어야 합니다.'
-          await useToastStore().showToast(error)
-        }
 
       } catch (error) {
         console.error('error', error);

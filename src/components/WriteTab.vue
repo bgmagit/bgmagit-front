@@ -1,10 +1,11 @@
 <script setup>
 import { InputGroup, InputGroupAddon, InputNumber, Select, useConfirm } from 'primevue'
 import { computed, onMounted, ref } from 'vue'
-import { useWriteState } from '@/stores/useAppStore.js'
+import { useTabStore, useWriteState } from '@/stores/useAppStore.js'
 
 const confirm = useConfirm();
 const writeState = useWriteState();
+const tabStore = useTabStore();
 
 const recordSeats =
   [
@@ -74,14 +75,16 @@ const saveData = () => {
 
           "matchsWind" : matchsWindValue.value.value
         };
-        await writeState.addContent(items, totalScore.value);
+        await writeState.addContent(items);
       },
     });
 
 }
 
-onMounted(() => {
-
+onMounted(async () => {
+  if(tabStore.writeTab){
+    console.log("확인", 확인);
+  }
 });
 
 </script>
