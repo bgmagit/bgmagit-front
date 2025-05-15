@@ -168,7 +168,7 @@ onMounted(async () => {
       <div class="write-box2">
           <Select v-model="recordSeatValue" :options="recordSeats" optionLabel="name" placeholder="" :class="{ 'p-invalid': !recordNameValue && isSubmitted }"/>
         <InputGroup>
-          <InputText v-model="recordNameValue" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue && isSubmitted }" />
+          <InputText v-model.trim="recordNameValue" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue && isSubmitted }" />
         </InputGroup>
         <InputGroup>
           <InputNumber v-model="recordScoreValue" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue && isSubmitted }"/>
@@ -178,7 +178,7 @@ onMounted(async () => {
       <div class="write-box2">
         <Select v-model="recordSeatValue2" :options="recordSeats" optionLabel="name" placeholder=""/>
         <InputGroup>
-          <InputText v-model="recordNameValue2" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue2 && isSubmitted }" />
+          <InputText v-model.trim="recordNameValue2" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue2 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
           <InputNumber v-model="recordScoreValue2" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue2 && isSubmitted }" />
@@ -188,7 +188,7 @@ onMounted(async () => {
       <div class="write-box2">
           <Select v-model="recordSeatValue3" :options="recordSeats" optionLabel="name" placeholder=""/>
         <InputGroup>
-          <InputText v-model="recordNameValue3" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue3 && isSubmitted }" />
+          <InputText v-model.trim="recordNameValue3" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue3 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
           <InputNumber v-model="recordScoreValue3" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue3 && isSubmitted }" />
@@ -198,7 +198,7 @@ onMounted(async () => {
       <div class="write-box2">
         <Select v-model="recordSeatValue4" :options="recordSeats" optionLabel="name" placeholder=""/>
         <InputGroup>
-          <InputText v-model="recordNameValue4" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue4 && isSubmitted }" />
+          <InputText v-model.trim="recordNameValue4" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue4 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
           <InputNumber v-model="recordScoreValue4" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue4 && isSubmitted }" />
