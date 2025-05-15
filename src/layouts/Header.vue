@@ -83,7 +83,7 @@
       <h3 class="font-bold">로그인</h3>
     </template>
       <IftaLabel>
-        <Password id="password" v-model="password" toggleMask class="login-input" :feedback="false" />
+        <Password id="password" v-model="password" toggleMask class="login-input" :feedback="false" @keyup.enter="handleLogin()" />
         <label for="password">password</label>
       </IftaLabel>
     <template #footer>
