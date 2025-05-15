@@ -19,6 +19,7 @@
 
   //로그아웃
   const handleLogout = () => {
+    tabStore.setTab(0);
     authStore.logout()
   }
 
