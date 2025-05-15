@@ -11,7 +11,7 @@ const fileStore = useFileState();
 const toastState = useToastStore();
 const pdfUrl = computed(() => fileStore.data);
 const fileupload = ref();
-const uploadUrl = ref(`${import.meta.env.VITE_API_URL}/bgm-agit/rule-file`);
+const uploadUrl = ref(`/bgm-agit/rule-file`);
 const toast = {};
 
 const handleLoad = () => {
