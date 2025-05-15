@@ -82,7 +82,7 @@ onMounted(async () => {
       <div class="detail-box" v-if="showModal" key="detail">
         <div class="detail-titleBox">
           <div>
-            <i class ="pi pi-clock mr-[2px]"></i>
+            <i class ="pi pi-heart-fill mr-[2px]"></i>
             {{modalHeader}}님의 상세 기록
           </div>
           <Button class="red-button" label="닫기" @click="() => showModal = false" />
