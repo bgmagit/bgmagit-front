@@ -15,6 +15,8 @@ const dt = ref();
 
 const exportCSV = () => {
   const data = dt.value.filteredValue || dt.value.value;
+  console.log("dt.value", dt.value.value);
+  console.log("dt.value.filteredValue", dt.value.filteredValue)
   const csvContent = convertToCSV(data);
   const BOM = '\uFEFF';
   const fullContent = BOM + csvContent;
@@ -54,9 +56,12 @@ const exportCSV = () => {
 const convertToCSV = (data) => {
   if (!data || !data.length) return '';
 
-  const headers = Object.keys(data[0]).join(',');
+  // 필드 순서와 헤더 매칭
+  const headers = orderedSelectedColumns.value.map(col => col.header).join(',');
+  const fields = orderedSelectedColumns.value.map(col => col.field);
+
   const rows = data.map(row =>
-    Object.values(row).map(value => `"${value}"`).join(',')
+    fields.map(field => `"${row[field] ?? ''}"`).join(',')
   );
 
   return [headers, ...rows].join('\n');

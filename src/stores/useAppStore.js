@@ -183,14 +183,13 @@ export const useWriteState = defineStore('write', {
       try {
 
         const error = {}
-        console.log("newItem", newItem)
-        debugger
+
         if(total === 120000) {
           const {data: result} = await api.post(`/bgm-agit/record`, newItem, );
 
           await useToastStore().showToast(result);
         }else {
-          error.message = '접수 합계는 120000이어야 합니다.'
+          error.message = '접수 합계는 120000점이어야 합니다.'
           await useToastStore().showToast(error)
         }
 
