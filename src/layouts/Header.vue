@@ -88,7 +88,7 @@
         <label for="password">password</label>
       </IftaLabel>
     <template #footer>
-      <Button class="blue-button" label="Login" @click="handleLogin()"/>
+      <Button icon="pi pi-user-plus" class="green-button" label="Login" @click="handleLogin()"/>
     </template>
   </Dialog>
 </template>
