@@ -216,3 +216,26 @@ export const useWriteState = defineStore('write', {
     },
   },
 });
+
+export const useFileState = defineStore('file', {
+  state: () => ({
+    data: null,
+  }),
+
+  actions: {
+    async getFile() {
+      try {
+        useLoadingStore().setLoading(true)
+
+        const {data: rule} = await api.get('/bgm-agit/rule-file');
+
+        this.data = rule.ruleFileUrl;
+
+      } catch (error) {
+        error.message = '대회룰을 가져오는 중 오류가 발생했습니다.'
+        await useToastStore().showToast(error)
+        console.error('error', error);
+      }
+    },
+  }
+});

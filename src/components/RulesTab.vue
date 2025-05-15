@@ -1,23 +1,39 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useLoadingStore } from '@/stores/useAppStore.js'
+import { useAuthStore, useFileState, useLoadingStore, useToastStore } from '@/stores/useAppStore.js'
+import { FileUpload } from 'primevue'
 
-const pdfUrl = ref('/rule.pdf');
+const authStore = useAuthStore();
+const currentUser = computed(() => authStore.currentUser);
+
 const loadingStore = useLoadingStore();
-
-const fullPdfUrl = computed(() => {
-  const base = window.location.origin; // 반드시 window 명시
-  const path = pdfUrl.value.startsWith('/') ? pdfUrl.value : '/' + pdfUrl.value;
-  return `${base}${path}`;
-});
+const fileStore = useFileState();
+const toastState = useToastStore();
+const pdfUrl = computed(() => fileStore.data);
+const fileupload = ref();
+const uploadUrl = ref(`${import.meta.env.VITE_API_URL}/bgm-agit/rule-file`);
 
 const handleLoad = () => {
   loadingStore.setLoading(false);
 };
 
-onMounted(() => {
-  loadingStore.setLoading(true); // 페이지 진입 시 로딩 시작
+const upload = () => {
+  fileupload.value.upload();
+};
+
+const onUpload = async () => {
+  const toast = {}
+  toast.code = 200;
+  toast.message = "업로드가 완료되었습니다."
+  toastState.showToast(toast);
+  await fileStore.getFile();
+};
+
+onMounted(async () => {
+  await fileStore.getFile();
+
 });
+
 </script>
 
 <template>
@@ -25,9 +41,13 @@ onMounted(() => {
     <div class="title-box">
       <img src="../assets/top.png" alt="타이틀 이미지"/>
     </div>
+    <div class="table-button" v-if="currentUser?.role === 'admin'">
+      <FileUpload ref="fileupload" mode="basic" name="ruleFile" :url="uploadUrl" accept="application/pdf" :maxFileSize="1000000" chooseLabel="파일 선택" class="purple-button" @upload="onUpload" />
+      <Button icon="pi pi-upload" class="blue-button" label="저장" @click="upload" />
+    </div>
     <div class="iframe-box">
       <iframe
-        :src="`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(fullPdfUrl)}`"
+        :src="`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(pdfUrl)}`"
         class="w-full h-[100vh] border-none"
         @load="handleLoad"
       ></iframe>
