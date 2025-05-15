@@ -78,24 +78,30 @@
   flex-shrink: 0;
   background-color: #462768 !important;
   border: none !important;
-}
-
-.purple-button:hover {
-  background-color: #5e3a8c !important;
-  cursor: pointer;
+  &:hover{
+    background-color: #5e3a8c !important;
+    cursor: pointer;
+  }
 }
 
 .red-button {
   flex-shrink: 0;
-  background-color: red !important;
+  background-color: #dc2626 !important;
   border: none !important;
+  &:hover{
+    background-color: #ef4444 !important;
+    cursor: pointer;
+  }
 }
-
-.red-button:hover {
-  background-color: #e34e4e !important;
-  cursor: pointer;
+.blue-button {
+  flex-shrink: 0;
+  background-color: #1d4ed8 !important;
+  border: none !important;
+  &:hover{
+    background-color: #2563eb !important;
+    cursor: pointer;
+  }
 }
-
 
 .login-input {
   margin-bottom: 24px;
@@ -147,6 +153,11 @@
 
 .p-datatable-table-container {
   border-radius: 12px !important;
+
+  .dataTable-buttonBox{
+    display: flex;
+    gap: 4px;
+  }
 }
 
 .p-datatable thead th {

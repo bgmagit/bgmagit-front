@@ -17,7 +17,8 @@ const columns = [
   { field: 'first', header: '1위', width: "15%" },
   { field: 'second', header: '2위', width: "15%" },
   { field: 'third', header: '3위', width: "15%" },
-  { field: 'fourth', header: '4위', width: "15%" }
+  { field: 'fourth', header: '4위', width: "15%" },
+  { field: 'button', header: '버튼', width: '7%' },
 ]
 
 const selectedColumns = ref([...columns])

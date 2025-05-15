@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { Button, MultiSelect, DataTable, Column } from 'primevue'
+import { useAuthStore, useTabStore } from '@/stores/useAppStore.js'
 
 const props = defineProps({
   columns: Array,
@@ -8,6 +9,10 @@ const props = defineProps({
   selectedColumns: Array,
   gb: String
 });
+
+const authStore = useAuthStore();
+const tabStore = useTabStore();
+const currentUser = computed(() => authStore.currentUser);
 
 const emit = defineEmits(['update:selectedColumns', 'openModal']);
 
@@ -84,6 +89,12 @@ const rowClass = (data) => {
   if (data.rank === 2) return 'bg-silver';
   if (data.rank === 3) return 'bg-bronze';
 };
+
+const moveTab = (data) => {
+
+  tabStore.setTab(3);
+}
+
 </script>
 
 <template>
@@ -123,11 +134,26 @@ const rowClass = (data) => {
         {{data.registDate}}
       </template>
       <template v-if="col.field === 'button'" #body="{ data }">
-        <Button
-          label="상세"
-          class="purple-button"
-          @click="() => emit('openModal', data)"
-        />
+        <div class="dataTable-buttonBox">
+          <Button
+            label="상세"
+            class="purple-button"
+            @click="() => emit('openModal', data)"
+            v-if="data.rank"
+          />
+          <Button
+            label="수정"
+            class="blue-button"
+            @click="moveTab(data)"
+            v-if="!data.rank && currentUser?.role === 'admin'"
+          />
+          <Button
+            label="삭제"
+            class="red-button"
+            @click="() => emit('openModal', slotProps)"
+            v-if="!data.rank && currentUser?.role === 'admin'"
+          />
+        </div>
       </template>
     </Column>
   </DataTable>

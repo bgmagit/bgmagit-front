@@ -21,7 +21,7 @@ const columns = [
   { field: 'recordSumPoint', header: '승점', width: '15%' },
   { field: 'recordPercent', header: '승점%', width: '15%' },
   { field: 'round', header: '국수', width: '15%' },
-  { field: 'button', header: '보기', width: '7%' },
+  { field: 'button', header: '버튼', width: '7%' },
 ]
 
 const modalColumns = [

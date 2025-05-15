@@ -10,6 +10,7 @@ export const useAuthStore = defineStore('auth', () => {
   ]
 
   const currentUser = ref(JSON.parse(localStorage.getItem('currentUser')));
+
   const isLoggedIn = ref(!!currentUser.value);
   const error = {}
 
@@ -182,41 +183,33 @@ export const useWriteState = defineStore('write', {
     async addContent(newItem, total) {
       try {
 
-        const error = {}
-
         if(total === 120000) {
           const {data: result} = await api.post(`/bgm-agit/record`, newItem, );
 
           await useToastStore().showToast(result);
         }else {
+          const error = {}
           error.message = '접수 합계는 120000점이어야 합니다.'
           await useToastStore().showToast(error)
         }
 
       } catch (error) {
         console.error('error', error);
-        error.message = "저장에 실패하였습니다.";
         await useToastStore().showToast(error);
       }
     },
 
-    // // 메모 수정
-    // async updateMemo(updateItem, gb) {
-    //   try {
-    //     const {data: result} = await api.put(`/viewer-api/viewer-${gb}-memo`, updateItem, );
-    //
-    //     if (gb === 'file') {
-    //       await this.fetchMemos();
-    //     } else {
-    //       await this.fetchAllMemos();
-    //     }
-    //
-    //     await useGlobalToastStore().showToast(result);
-    //   } catch (error) {
-    //     error.message = "메모 수정이 실패했습니다.";
-    //     await useGlobalToastStore().showToast(error);
-    //   }
-    // },
+    // 메모 수정
+    async updateContent(updateItem) {
+      try {
+        const {data: result} = await api.put(`/bgm-agit/record`, updateItem, );
+
+        await useToastStore().showToast(result);
+
+      } catch (error) {
+        await useToastStore().showToast(error);
+      }
+    },
     //
     // // 메모 삭제
     // async deleteMemo(seq, gb) {

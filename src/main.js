@@ -24,7 +24,12 @@ const app = createApp(App)
 app.use(createPinia())
   .use(PrimeVue, {
     theme: {
-      preset: Aura
+      preset: Aura,
+      options: {
+        prefix: 'p',
+        darkModeSelector: false,
+        cssLayer: false
+      }
     }
   }).use(ToastService).use(ConfirmationService);
 

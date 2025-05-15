@@ -1,6 +1,6 @@
 <script setup>
-import { InputGroup, InputGroupAddon, InputNumber, Select, useConfirm, ConfirmDialog } from 'primevue'
-import { computed, ref } from 'vue'
+import { InputGroup, InputGroupAddon, InputNumber, Select, useConfirm } from 'primevue'
+import { computed, onMounted, ref } from 'vue'
 import { useWriteState } from '@/stores/useAppStore.js'
 
 const confirm = useConfirm();
@@ -79,6 +79,10 @@ const saveData = () => {
     });
 
 }
+
+onMounted(() => {
+
+});
 
 </script>
 
