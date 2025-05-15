@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useAuthStore, useFileState, useLoadingStore, useToastStore } from '@/stores/useAppStore.js'
 import { FileUpload } from 'primevue'
 
@@ -40,7 +40,10 @@ const onUpload = async () => {
 
 onMounted(async () => {
   await fileStore.getFile();
+});
 
+onUnmounted( () =>{
+  loadingStore.setLoading(false);
 });
 
 </script>
