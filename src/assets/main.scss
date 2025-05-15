@@ -458,3 +458,42 @@
     font-size: 14px;
   }
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 어두운 반투명 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+
+.modal-box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #16a24a;
+  z-index: 2;
+
+  .loginHeader-box {
+    background-color: #16a24a;
+    border-radius: 10px 10px 0 0;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 18px;
+  }
+  .loginContent-box{
+    margin: 24px auto;
+  }
+
+  .loginButton-box{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+  }
+}

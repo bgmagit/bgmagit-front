@@ -79,18 +79,27 @@
       </template>
     </Menubar>
   </header>
-  <Dialog v-model:visible="showLogin" modal header="로그인" style="width: 300px;">
-    <template #header>
-      <h3 class="font-bold">로그인</h3>
-    </template>
-      <IftaLabel>
-        <Password id="password" v-model="password" toggleMask class="login-input" :feedback="false" @keyup.enter="handleLogin()" />
-        <label for="password">password</label>
-      </IftaLabel>
-    <template #footer>
-      <Button icon="pi pi-user-plus" class="green-button" label="Login" @click="handleLogin()"/>
-    </template>
-  </Dialog>
+  <div v-if="showLogin" class="modal-overlay">
+    <div class="modal-box">
+      <div class="confirm-box" style="width: 300px;">
+        <div class="loginHeader-box">
+          <span class="font-bold text-2xl block mb-2 mt-6">로그인</span>
+        </div>
+        <div class="loginContent-box">
+          <IftaLabel>
+            <Password id="password" v-model="password" toggleMask class="login-input" :feedback="false" @keyup.enter="handleLogin()" />
+            <label for="password">password</label>
+          </IftaLabel>
+        </div>
+        <div class="confirmContent-box">
+          <div class="loginButton-box">
+            <Button icon="pi pi-user-plus" class="green-button" label="Login" @click="handleLogin()"/>
+            <Button class="red-button" label="닫기" @click="showLogin = false"></Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>
