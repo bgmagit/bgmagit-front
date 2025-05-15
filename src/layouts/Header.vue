@@ -15,6 +15,7 @@
     const success = authStore.login(password.value)
     if(success) showLogin.value = false;
     password.value = '';
+    tabStore.setTab(0);
   }
 
   //로그아웃
