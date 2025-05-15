@@ -489,11 +489,15 @@
   }
   .loginContent-box{
     margin: 24px auto;
+    input{
+      width: 280px;
+    }
   }
 
   .loginButton-box{
     display: flex;
     justify-content: center;
     gap: 4px;
+    margin-bottom: 24px;
   }
 }

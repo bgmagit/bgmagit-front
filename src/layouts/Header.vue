@@ -96,12 +96,10 @@
             <label for="password">password</label>
           </IftaLabel>
         </div>
-        <div class="confirmContent-box">
           <div class="loginButton-box">
             <Button icon="pi pi-user-plus" class="green-button" label="로그인" @click="handleLogin()"/>
             <Button class="red-button" label="닫기" @click="closeModal()"></Button>
           </div>
-        </div>
       </div>
     </div>
   </div>
