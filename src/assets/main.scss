@@ -289,13 +289,6 @@
   color: black !important;
 }
 
-.p-dialog-header-actions {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  -webkit-appearance: none;
-}
-
 .p-dialog-mask .p-dialog {
   border: none;
 
@@ -438,7 +431,7 @@
   flex-direction: column;
 
   .confirmHeader-box{
-    background-color: #482768;
+    background-color: #1d4ed8;
     border-radius: 10px 10px 0 0;
     color: white;
     padding: 8px;
@@ -447,12 +440,13 @@
   }
 
   .confirmContent-box{
-    padding: 8px;
+    padding: 12px 24px 12px 24px;
   }
 
   .confirmButton-box{
     display: flex;
     justify-content: center;
+    margin-top: 24px;
     gap: 4px;
   }
 }
