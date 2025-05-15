@@ -13,7 +13,7 @@ import { ConfirmDialog } from 'primevue'
         <div class="confirmContent-box">
           <p class="mb-0">{{ message.message }}</p>
           <div class="confirmButton-box">
-            <Button class="purple-button" label="저장" @click="acceptCallback"></Button>
+            <Button class="blue-button" label="저장" @click="acceptCallback"></Button>
             <Button class="red-button" label="취소" @click="rejectCallback"></Button>
           </div>
         </div>

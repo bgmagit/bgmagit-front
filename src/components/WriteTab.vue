@@ -154,11 +154,11 @@ onMounted(async () => {
     </div>
     <div class="detail-titleBox">
       <div>
-        <i class ="pi pi-pencil mr-[12px]"></i>
+        <i class ="pi pi-pencil mr-[8px]"></i>
         <span>기록 입력</span>
       </div>
       <div class="total-box">접수 합계 : {{totalScore}}</div>
-      <Button class="purple-button" label="저장" @click="saveData()" />
+      <Button class="blue-button" label="저장" @click="saveData()" />
     </div>
     <div class="write-wrapper">
       <span>※ 동남서북은 처음 진동을 중심으로 앉게 된 자리를 나타냅니다. 진동이 동이며, 나머지는 진행 순서대로 남, 서, 북가가 됩니다.</span>

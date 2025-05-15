@@ -82,10 +82,10 @@ onMounted(async () => {
       <div class="detail-box" v-if="showModal" key="detail">
         <div class="detail-titleBox">
           <div>
-            <i class ="pi pi-clock mr-[4px]"></i>
+            <i class ="pi pi-clock mr-[2px]"></i>
             {{modalHeader}}님의 상세 기록
           </div>
-          <Button class="purple-button" label="닫기" @click="() => showModal = false" />
+          <Button class="red-button" label="닫기" @click="() => showModal = false" />
         </div>
         <TableArea
           :columns="modalColumns"
