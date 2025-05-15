@@ -136,6 +136,7 @@ const deleteData = async (data) => {
     :rows="10"
     ref="dt"
     paginator
+    :pageLinkSize="3"
     :rowClass="rowClass"
     :rowsPerPageOptions="[5, 10, 20, 50]"
   >
