@@ -1,11 +1,12 @@
 <script setup>
 import { InputGroup, InputGroupAddon, InputNumber, Select, useConfirm } from 'primevue'
 import { computed, onMounted, ref } from 'vue'
-import { useTabStore, useWriteState } from '@/stores/useAppStore.js'
+import { useTabStore, useToastStore, useWriteState } from '@/stores/useAppStore.js'
 
 const confirm = useConfirm();
 const writeState = useWriteState();
 const tabStore = useTabStore();
+const toastState = useToastStore();
 
 const recordSeats =
   [
@@ -23,6 +24,10 @@ const matchsWinds =
     { name: '북장', value: 'NORTH'}
   ]
 
+//수정
+const detailData = ref();
+
+const isSubmitted = ref(false);
 
 const matchsWindValue = ref(matchsWinds[1]);
 const recordSeatValue = ref(recordSeats[0]);
@@ -48,42 +53,95 @@ const totalScore = computed(() =>{
 })
 
 const saveData = () => {
+  isSubmitted.value = true;
 
-    confirm.require({
-      group: 'headless',
-      header: '확인',
-      message: '입력하신 정보로 저장하시겠습니까?',
-      accept: async() => {
-        const items = {
-          "recordRequests" : [ {
-            "recordName" : recordNameValue.value,
-            "recordScore" : recordScoreValue.value,
-            "recordSeat" : recordSeatValue.value.value,
-          }, {
-            "recordName" : recordNameValue2.value,
-            "recordScore" : recordScoreValue2.value,
-            "recordSeat" : recordSeatValue2.value.value,
-          }, {
-            "recordName" : recordNameValue3.value,
-            "recordScore" : recordScoreValue3.value,
-            "recordSeat" : recordSeatValue3.value.value,
-          }, {
-            "recordName" : recordNameValue4.value,
-            "recordScore" : recordScoreValue4.value,
-            "recordSeat" : recordSeatValue4.value.value,
-          } ],
+  const recordRequests = [
+    {
+      recordName: recordNameValue.value,
+      recordScore: recordScoreValue.value,
+      recordSeat: recordSeatValue.value.value,
+      recordId: detailData.value?.recordModifyResponses[0].recordId
+    },
+    {
+      recordName: recordNameValue2.value,
+      recordScore: recordScoreValue2.value,
+      recordSeat: recordSeatValue2.value.value,
+      recordId: detailData.value?.recordModifyResponses[1].recordId
+    },
+    {
+      recordName: recordNameValue3.value,
+      recordScore: recordScoreValue3.value,
+      recordSeat: recordSeatValue3.value.value,
+      recordId: detailData.value?.recordModifyResponses[2].recordId
+    },
+    {
+      recordName: recordNameValue4.value,
+      recordScore: recordScoreValue4.value,
+      recordSeat: recordSeatValue4.value.value,
+      recordId: detailData.value?.recordModifyResponses[3].recordId
+    }
+  ];
 
-          "matchsWind" : matchsWindValue.value.value
-        };
+  const hasInvalid = recordRequests.some(item => {
+    return !item.recordName || item.recordScore === null || item.recordScore === undefined;
+  });
+
+  if (hasInvalid) {
+    // 유효성 오류 알림
+    const error = {}
+    error.message = "입력하지 않은 이름 혹은 점수가 있습니다."
+    toastState.showToast(error);
+    return;
+  }
+
+  // 저장 확인
+  confirm.require({
+    group: 'headless',
+    header: '확인',
+    message: '입력하신 정보로 저장하시겠습니까?',
+    accept: async () => {
+      const items = {
+        recordRequests,
+        matchsWind: matchsWindValue.value.value,
+      };
+
+      if (tabStore.writeTab) {
+        items.matchId = detailData.value.matchsId;
+        await writeState.updateContent(items);
+      } else {
         await writeState.addContent(items);
-      },
-    });
-
-}
-
+      }
+    },
+  });
+};
 onMounted(async () => {
-  if(tabStore.writeTab){
-    console.log("확인", 확인);
+  if (tabStore.writeTab) {
+    detailData.value = writeState.items;
+    console.log("detailData.value", detailData.value);
+
+    // 바람
+    matchsWindValue.value = matchsWinds.find(w => w.value === detailData.value.matchsWind);
+
+    // 기록자 1~4 세팅
+    const records = detailData.value.recordModifyResponses;
+
+    if (records && records.length === 4) {
+      recordSeatValue.value = recordSeats.find(s => s.value === records[0].recordSeat);
+      recordNameValue.value = records[0].recordName;
+      recordScoreValue.value = records[0].recordScore;
+
+      recordSeatValue2.value = recordSeats.find(s => s.value === records[1].recordSeat);
+      recordNameValue2.value = records[1].recordName;
+      recordScoreValue2.value = records[1].recordScore;
+
+      recordSeatValue3.value = recordSeats.find(s => s.value === records[2].recordSeat);
+      recordNameValue3.value = records[2].recordName;
+      recordScoreValue3.value = records[2].recordScore;
+
+      recordSeatValue4.value = recordSeats.find(s => s.value === records[3].recordSeat);
+      recordNameValue4.value = records[3].recordName;
+      recordScoreValue4.value = records[3].recordScore;
+    }
   }
 });
 
@@ -108,42 +166,42 @@ onMounted(async () => {
           <Select v-model="matchsWindValue" :options="matchsWinds" optionLabel="name" placeholder="" />
       </div>
       <div class="write-box2">
-          <Select v-model="recordSeatValue" :options="recordSeats" optionLabel="name" placeholder=""/>
+          <Select v-model="recordSeatValue" :options="recordSeats" optionLabel="name" placeholder="" :class="{ 'p-invalid': !recordNameValue && isSubmitted }"/>
         <InputGroup>
-          <InputText v-model="recordNameValue" placeholder="이름을 입력해주세요." />
+          <InputText v-model="recordNameValue" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" />
+          <InputNumber v-model="recordScoreValue" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue && isSubmitted }"/>
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>
       <div class="write-box2">
         <Select v-model="recordSeatValue2" :options="recordSeats" optionLabel="name" placeholder=""/>
         <InputGroup>
-          <InputText v-model="recordNameValue2" placeholder="이름을 입력해주세요." />
+          <InputText v-model="recordNameValue2" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue2 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue2" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" />
+          <InputNumber v-model="recordScoreValue2" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue2 && isSubmitted }" />
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>
       <div class="write-box2">
           <Select v-model="recordSeatValue3" :options="recordSeats" optionLabel="name" placeholder=""/>
         <InputGroup>
-          <InputText v-model="recordNameValue3" placeholder="이름을 입력해주세요." />
+          <InputText v-model="recordNameValue3" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue3 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue3" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" />
+          <InputNumber v-model="recordScoreValue3" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue3 && isSubmitted }" />
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>
       <div class="write-box2">
         <Select v-model="recordSeatValue4" :options="recordSeats" optionLabel="name" placeholder=""/>
         <InputGroup>
-          <InputText v-model="recordNameValue4" placeholder="이름을 입력해주세요." />
+          <InputText v-model="recordNameValue4" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue4 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue4" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" />
+          <InputNumber v-model="recordScoreValue4" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue4 && isSubmitted }" />
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>

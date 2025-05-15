@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { Button, MultiSelect, DataTable, Column } from 'primevue'
+import { Button, MultiSelect, DataTable, Column, useConfirm } from 'primevue'
 import { useAuthStore, useTabStore, useWriteState } from '@/stores/useAppStore.js'
 
 const props = defineProps({
@@ -14,6 +14,8 @@ const authStore = useAuthStore();
 const tabStore = useTabStore();
 const writeStore = useWriteState();
 const currentUser = computed(() => authStore.currentUser);
+
+const confirm = useConfirm();
 
 const emit = defineEmits(['update:selectedColumns', 'openModal']);
 
@@ -93,9 +95,24 @@ const rowClass = (data) => {
 
 const moveTab = async (data) => {
   const detailData = await writeStore.getContent(data.matchsId);
+  console.log(detailData)
   if(detailData) {
     tabStore.setTab(3, true);
   }
+}
+
+const deleteData = async (data) => {
+  console.log("id", data)
+  const id = data.matchsId;
+  confirm.require({
+    group: 'headless',
+    header: '확인',
+    message: '정말 삭제 하시겠습니까?',
+    accept: async () => {
+      await writeStore.deleteContent(id);
+    },
+  });
+
 }
 
 </script>
@@ -153,7 +170,7 @@ const moveTab = async (data) => {
           <Button
             label="삭제"
             class="red-button"
-            @click="() => emit('openModal', slotProps)"
+            @click="deleteData(data)"
             v-if="!data.rank && currentUser?.role === 'admin'"
           />
         </div>

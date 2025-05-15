@@ -47,7 +47,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   })
 
-
   return {
     users,
     currentUser,
@@ -172,13 +171,13 @@ export const useWriteState = defineStore('write', {
       try {
         const {data: result} = await api.get(`/bgm-agit/record/${id}`);
         this.items = result;
+        return result;
       } catch (error) {
         error.message = '상세 조회에 실패하였습니다.'
         await useToastStore().showToast(error)
       }
     },
 
-    // 메모 입력
     async addContent(newItem) {
       try {
 
@@ -192,7 +191,6 @@ export const useWriteState = defineStore('write', {
       }
     },
 
-    // 메모 수정
     async updateContent(updateItem) {
       try {
         const {data: result} = await api.put(`/bgm-agit/record`, updateItem, );
@@ -203,31 +201,18 @@ export const useWriteState = defineStore('write', {
         await useToastStore().showToast(error);
       }
     },
-    //
-    // // 메모 삭제
-    // async deleteMemo(seq, gb) {
-    //   try {
-    //     const {data: result} = await api.delete(`/viewer-api/viewer-${gb}-memo/${seq}`);
-    //
-    //     if (gb === 'file') {
-    //       await this.fetchMemos();
-    //     } else {
-    //       await this.fetchAllMemos();
-    //     }
-    //
-    //     await useGlobalToastStore().showToast(result);
-    //   } catch (error) {
-    //     error.message = "메모 삭제가 실패했습니다.";
-    //     await useGlobalToastStore().showToast(error);
-    //   }
-    // },
-    //
-    // setSelectMemoData(newData) {
-    //   this.selectedItem = newData;
-    // },
-    //
-    // setMemoGb(boolean) {
-    //   this.memoGb = boolean;
-    // },
+
+    async deleteContent(id) {
+      try {
+        const {data: result} = await api.delete(`/bgm-agit/record/${id}`);
+
+        await useToastStore().showToast(result);
+
+        await useRecordStore().getRecord();
+      } catch (error) {
+        error.message = "메모 삭제가 실패했습니다.";
+        await useToastStore().showToast(error);
+      }
+    },
   },
 });
