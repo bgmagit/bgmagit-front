@@ -277,7 +277,7 @@
   &-header {
     padding: 0 0 0 1.5rem;
     background-color: #462768;
-    border-radius: 12px 12px 0 0 !important;
+    border-radius: 10px 10px 0 0 !important;
     h3 {
       font-size: 1rem;
       color: #fff;
@@ -341,6 +341,10 @@
     .p-dialog-content {
       padding: 0;
     }
+  }
+
+  .p-password-input {
+    width: 100%;
   }
 }
 
