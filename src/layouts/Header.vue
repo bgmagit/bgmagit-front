@@ -62,6 +62,11 @@
   function activeTab(value) {
     tabStore.setTab(value);
   }
+
+  const closeModal = () => {
+    password.value = '';
+    showLogin.value = false;
+  }
 </script>
 
 <template>
@@ -93,8 +98,8 @@
         </div>
         <div class="confirmContent-box">
           <div class="loginButton-box">
-            <Button icon="pi pi-user-plus" class="green-button" label="Login" @click="handleLogin()"/>
-            <Button class="red-button" label="닫기" @click="showLogin = false"></Button>
+            <Button icon="pi pi-user-plus" class="green-button" label="로그인" @click="handleLogin()"/>
+            <Button class="red-button" label="닫기" @click="closeModal()"></Button>
           </div>
         </div>
       </div>
