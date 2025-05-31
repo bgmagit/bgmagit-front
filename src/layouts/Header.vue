@@ -76,7 +76,7 @@
       class="flex-1 border-none menubar-custom"
     >
       <template #start>
-        <img :src="mainLogo" alt="로고" class="w-[160px]" />
+        <img :src="mainLogo" alt="로고" class="w-[160px]" @click="activeTab(0)"/>
       </template>
       <template #end>
         <Button v-if="!loggedIn" label="Login" icon="pi pi-user-plus" class="green-button" @click="showLogin = true" />
