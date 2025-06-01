@@ -171,7 +171,7 @@ onMounted(async () => {
           <InputText v-model.trim="recordNameValue" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue && isSubmitted }"/>
+          <InputText v-model="recordScoreValue" placeholder="점수를 입력해주세요." :style="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue && isSubmitted }"/>
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>
@@ -181,7 +181,7 @@ onMounted(async () => {
           <InputText v-model.trim="recordNameValue2" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue2 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue2" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue2 && isSubmitted }" />
+          <InputText v-model="recordScoreValue2" placeholder="점수를 입력해주세요." :style="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue2 && isSubmitted }" />
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>
@@ -191,7 +191,7 @@ onMounted(async () => {
           <InputText v-model.trim="recordNameValue3" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue3 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue3" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue3 && isSubmitted }" />
+          <InputText v-model="recordScoreValue3" placeholder="점수를 입력해주세요." :style="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue3 && isSubmitted }" />
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>
@@ -201,7 +201,7 @@ onMounted(async () => {
           <InputText v-model.trim="recordNameValue4" placeholder="이름을 입력해주세요." :class="{ 'p-invalid': !recordNameValue4 && isSubmitted }" />
         </InputGroup>
         <InputGroup>
-          <InputNumber v-model="recordScoreValue4" placeholder="점수를 입력해주세요." :inputStyle="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue4 && isSubmitted }" />
+          <InputText v-model="recordScoreValue4" placeholder="점수를 입력해주세요." :style="{ textAlign: 'right' }" :inputClass="{ 'p-invalid': !recordScoreValue4 && isSubmitted }" />
           <InputGroupAddon>점</InputGroupAddon>
         </InputGroup>
       </div>

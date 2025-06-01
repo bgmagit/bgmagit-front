@@ -184,6 +184,7 @@ export const useWriteState = defineStore('write', {
           const {data: result} = await api.post(`/bgm-agit/record`, newItem, );
 
           await useToastStore().showToast(result);
+          useTabStore().setTab(1);
 
       } catch (error) {
         console.error('error', error);
@@ -196,6 +197,8 @@ export const useWriteState = defineStore('write', {
         const {data: result} = await api.put(`/bgm-agit/record`, updateItem, );
 
         await useToastStore().showToast(result);
+
+        useTabStore().setTab(1);
 
       } catch (error) {
         await useToastStore().showToast(error);
