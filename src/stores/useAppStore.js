@@ -184,7 +184,8 @@ export const useWriteState = defineStore('write', {
           const {data: result} = await api.post(`/bgm-agit/record`, newItem, );
 
           await useToastStore().showToast(result);
-          useTabStore().setTab(1);
+
+          if(result.code === 200) useTabStore().setTab(1);
 
       } catch (error) {
         console.error('error', error);
@@ -198,7 +199,7 @@ export const useWriteState = defineStore('write', {
 
         await useToastStore().showToast(result);
 
-        useTabStore().setTab(1);
+        if(result.code === 200) useTabStore().setTab(1);
 
       } catch (error) {
         await useToastStore().showToast(error);
