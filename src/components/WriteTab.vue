@@ -47,7 +47,7 @@ const recordNameValue4 = ref();
 const recordScoreValue4 = ref(0);
 
 const totalScore = computed(() =>{
-  const total = recordScoreValue.value + recordScoreValue2.value + recordScoreValue3.value + recordScoreValue4.value
+  const total = Number(recordScoreValue.value) + Number(recordScoreValue2.value) + Number(recordScoreValue3.value) + Number(recordScoreValue4.value)
   if(!Number(total)) return 0;
   else{ return total}
 })
