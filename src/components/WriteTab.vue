@@ -150,7 +150,7 @@ onMounted(async () => {
 <template>
   <div>
     <div class="title-box">
-      <img src="../assets/top4.jpg" alt="타이틀 이미지" />
+      <img src="../assets/top4.jpg" alt="타이틀 이미지" @click="tabStore.setTab(0)"/>
     </div>
     <div class="detail-titleBox">
       <div>

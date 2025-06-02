@@ -1,10 +1,11 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useAuthStore, useRecordStore } from '@/stores/useAppStore.js'
+import { useAuthStore, useRecordStore, useTabStore } from '@/stores/useAppStore.js'
 
 const recordStore = useRecordStore();
 const authStore = useAuthStore();
 const currentUser = computed(() => authStore.currentUser);
+const tabStore = useTabStore();
 
 const recordData = computed(() => {
   return (recordStore.data || []).map((item, index) => ({
@@ -37,7 +38,7 @@ onMounted(async () => {
 <template>
   <div>
     <div class="title-box">
-      <img src="@/assets/top2.png" alt="타이틀 이미지"/>
+        <img src="@/assets/top2.png" alt="타이틀 이미지" @click="tabStore.setTab(0)"/>
     </div>
     <TableArea
       :columns="columns"

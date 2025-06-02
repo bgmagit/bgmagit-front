@@ -115,6 +115,20 @@ const deleteData = async (data) => {
 
 }
 
+const getStyle = (titleName, field) => {
+  if (!titleName || !field) return {};
+
+  const normalizedTitle = titleName.toLowerCase();
+  const normalizedField = field.toLowerCase();
+
+  // field에 titleName이 포함되어 있는지 확인
+  if (normalizedField.includes(normalizedTitle)) {
+    return { color: '#16a14a', fontWeight: 'bold' }; // 원하는 스타일
+  }
+
+  return {};
+};
+
 </script>
 
 <template>
@@ -153,6 +167,11 @@ const deleteData = async (data) => {
         <i v-if="data.recodrdGb" class="pi pi-check record-check"></i>
         <i v-if="!data.recodrdGb" class="pi pi-check record-check-none"></i>
         {{data.registDate}}
+      </template>
+      <template v-if="['first', 'second', 'third', 'fourth'].includes(col.field)" #body="{ data, field }">
+        <span :style="getStyle(data.titleName, data[field])">
+          {{ data[field] }}
+        </span>
       </template>
       <template v-if="col.field === 'button'" #body="{ data }">
         <div class="dataTable-buttonBox">

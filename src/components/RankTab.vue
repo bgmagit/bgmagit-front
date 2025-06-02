@@ -1,8 +1,9 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useRankStore } from '@/stores/useAppStore.js'
-const rankStore = useRankStore()
-const showModal = ref(false)
+import { useRankStore, useTabStore } from '@/stores/useAppStore.js'
+const rankStore = useRankStore();
+const showModal = ref(false);
+const tabStore = useTabStore();
 
 const rankData = computed(() => {
   return (rankStore.data || []).map((item, index) => ({
@@ -51,6 +52,7 @@ const openModal = async (data) => {
   const detailDatas = datas.map((item, index) => ({
       ...item,
       no: index + 1,
+      titleName: data.recordName,
       recodrdGb: recordIds.includes(item.recordId)
     }))
 
@@ -66,7 +68,7 @@ onMounted(async () => {
 <template>
   <div>
     <div class="title-box">
-      <img src="../assets/top3.png" alt="타이틀 이미지" />
+      <img src="../assets/top3.png" alt="타이틀 이미지" @click="tabStore.setTab(0)"/>
     </div>
     <transition name="rotate" mode="out-in">
       <div  v-if="!showModal" key="rank">
